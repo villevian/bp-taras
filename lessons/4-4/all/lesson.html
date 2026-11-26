@@ -11,7 +11,7 @@ details.voc{margin:12px 0 0;border:1.5px solid #e8894a;border-radius:6px}details
 .bar{background:#fbeadb;padding:6px 14px;border-radius:6px;font-size:14.5px}.st.ok{color:#2e7d4f}.st.err{color:#c0392b}
 .tcom{display:none;margin-top:10px;background:#fdf0d5;border-left:4px solid #f2b631;padding:10px 14px;border-radius:4px;font-size:15px;white-space:pre-wrap}.tcom b{display:block;font-weight:600}
 nav{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px}nav button{min-width:46px;height:40px;border:1.5px solid #e8894a;background:#fff;color:#c4642a;border-radius:20px;font:500 16px "Fira Sans",system-ui,sans-serif;cursor:pointer;padding:0 12px}nav button.on{background:#e8894a;color:#fff}
-main{padding:4px 0 30px}.sec{display:none}.sec.on{display:block}
+main{padding:4px 0 30px}.sec{display:none}.sec.on{display:block}body.tv nav,body.tv #submit,body.tv .ctl .btn,body.tv #vkFab{display:none!important}body.tv .sec{display:block!important;border-top:3px solid #e8894a;margin-top:26px;padding-top:6px}body.tv .sec:before{content:attr(data-tv);display:block;font:600 19px "Fira Sans",sans-serif;color:#c4642a;margin:6px 0 4px}body.tv .model{display:block!important}body.tv input.g,body.tv select.g,body.tv textarea.g{background:#fbfbfd;color:#111;opacity:1}#tvbar{display:none}body.tv #tvbar{display:block;position:sticky;top:0;z-index:50;background:#fff7ef;border-bottom:2px solid #e8894a;padding:8px 14px;font-size:15px}
 .bsec{font-weight:600;color:#8a8b8d;font-size:24px;margin:18px 0 8px}.bsec .sub{color:#231f20;font-weight:500;font-size:20px;margin-left:10px}.bsec.wr{color:#fff;background:#e8894a;display:inline-block;padding:2px 14px;border-radius:4px}
 .ins{font-weight:500;margin:16px 0 8px}.ins b.x{color:#e8894a;font-size:21px;margin-right:6px}.ins .q{color:#c4642a;margin-right:6px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.chips span{border:1.5px solid #c8c9cb;border-radius:6px;padding:3px 14px;font-weight:500}
@@ -52,7 +52,7 @@ const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:S
 const $=id=>document.getElementById(id);let student="",timer=null,submitted=false,ready=false;
 const norm=s=>(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").replace(/[.!?]+$/,"").trim();
 const okv=(k,v)=>KEY[k].some(x=>norm(x)===norm(v));
-let CTX=null;
+let CTX=null;const VIEW=new URLSearchParams(location.search).has("view");
 function _tx(el){const c=el.cloneNode(true);c.querySelectorAll("b.x").forEach(b=>b.append(" "));c.querySelectorAll("b").forEach(b=>{if(/^[A-H]$/.test(b.textContent.trim()))b.append(" ")});return (c.textContent||"").replace(/\s+/g," ").trim()}
 function _prompt(el){
  const nl=el.closest(".notes");if(nl){const lb=el.previousElementSibling;if(lb&&lb.tagName==="LABEL")return _tx(lb)}
@@ -72,11 +72,17 @@ function fill(a){document.querySelectorAll("input.g[data-k],select.g[data-k],tex
 function scores(){const a=collect(),r={};for(const k in KEY){const p=k.replace(/_[^_]+$/,"");r[p]=r[p]||[0,0];r[p][1]++;if(a[k]!=null&&okv(k,a[k]))r[p][0]++}const o={};for(const p in r)o[p]=r[p][0]+"/"+r[p][1];return o}
 function status(t,c=""){$("st").textContent=t;$("st").className="st "+c}
 function local(){try{localStorage.setItem("hw:"+LESSON+":"+(STUDENT_CODE||"preview"),JSON.stringify(collect()))}catch(e){}}
-async function save(){if(!ready)return;local();if(!STUDENT_CODE){status("Template preview — answers are not sent anywhere.");return}status("Saving…");
+async function save(){if(!ready||VIEW)return;local();if(!STUDENT_CODE){status("Template preview — answers are not sent anywhere.");return}status("Saving…");
  try{await rpc("save_hw",{p_code:STUDENT_CODE,p_lesson:LESSON,p_answers:collect(),p_score:scores(),p_submitted:submitted});status("Saved ✓ "+new Date().toLocaleTimeString().slice(0,5),"ok")}
  catch(e){status("Not saved online — check your internet. Your answers are kept on this device.","err")}}
-function later(){clearTimeout(timer);timer=setTimeout(save,1200)}
-async function start(){let a=null;if(STUDENT_CODE){try{const r=await rpc("get_my_hw",{p_code:STUDENT_CODE,p_lesson:LESSON});const d=r&&r[0];
+function later(){if(VIEW)return;clearTimeout(timer);timer=setTimeout(save,1200)}
+function teacherView(d){const a=d.answers||{};fill(a);document.body.classList.add("tv");
+ const bar=document.createElement("div");bar.id="tvbar";bar.innerHTML="👩‍🏫 <b>Teacher view</b> · "+(d.name||"")+" · "+(d.submitted?"✓ Sent to teacher":"⏳ Not sent yet")+" · read-only, nothing is saved";document.body.prepend(bar);
+ document.querySelectorAll("section.sec").forEach(sec=>{const nb=document.querySelector('nav button[data-s="'+sec.id+'"]');sec.dataset.tv="Step "+(nb?nb.textContent.trim():sec.id)});
+ document.querySelectorAll(".ctl .btn[onclick]").forEach(b=>{try{(new Function(b.getAttribute("onclick")))()}catch(e){}});
+ document.querySelectorAll("input.g,textarea.g").forEach(x=>x.readOnly=true);document.querySelectorAll("select.g,input[type=radio]").forEach(x=>x.disabled=true);
+ if(window.afterFill)afterFill();const post=()=>parent.postMessage({tvHeight:document.documentElement.scrollHeight},"*");post();setTimeout(post,800);setTimeout(post,2500)}
+async function start(){let a=null;if(VIEW){status("Teacher view");addEventListener("message",e=>{if(e.data&&e.data.tv)teacherView(e.data.tv)});parent.postMessage({tvReady:1},"*");return}if(STUDENT_CODE){try{const r=await rpc("get_my_hw",{p_code:STUDENT_CODE,p_lesson:LESSON});const d=r&&r[0];
  if(d){student=d.name;if(d.answers){a=d.answers;submitted=!!d.submitted;if(submitted)$("done").style.display="block"}if(d.teacher_comment){$("tcomt").textContent=d.teacher_comment;$("tcom").style.display="block"}}}catch(e){}}
  if(!a){try{a=JSON.parse(localStorage.getItem("hw:"+LESSON+":"+(STUDENT_CODE||"preview"))||localStorage.getItem("hw:"+LESSON+":preview")||"null")}catch(e){}}if(a)fill(a);ready=true;if(STUDENT_CODE&&a&&!a._ctx)save();
  if(!STUDENT_CODE)status("Template preview — answers are not sent anywhere.");else status(student?(a?"Welcome back, "+student+"! Your answers are loaded.":"Hi, "+student+"! Your answers save automatically."):"Your answers save automatically.","ok")}
