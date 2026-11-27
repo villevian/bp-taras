@@ -48,7 +48,7 @@ B: …" style="min-height:140px"></textarea><div class="gbox"><div class="gh">Pr
 <footer>Videos: coursebook videos (Pearson), YouTube. Valentyna Hordiienko · Middle Learning Architect</footer>
 <script>
 const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
-const LESSON="BP B1 4.3 Managing conversations · Lesson";const STUDENT_CODE="700fd454c53e57244dd017cc008b8654";const KEY={"f7_1": ["S"], "f7_2": ["C"], "f7_3": ["C"], "f7_4": ["S"], "f7_5": ["C"], "f7_6": ["S"], "f7_7": ["C"], "f7_8": ["C"], "f8_1": ["can we move to", "could we move to"], "f8_2": ["this a good moment to start talking about the"], "f8_3": ["get to the", "come to the"], "f8_4": ["in a moment"], "f8_5": ["reminds me"], "f8_6": ["will be plenty of time for that later", "’ll be plenty of time for that later", "'ll be plenty of time for that later"], "pr_1": ["extra"], "pr_2": ["no"], "pr_3": ["extra"], "pr_4": ["no"], "pr_5": ["no"], "pr_6": ["extra"], "pr_7": ["extra"], "pr_8": ["no"]};
+const SKILLS={},STAGE="first",CHECKED=new Set();const LESSON="BP B1 4.3 Managing conversations · Lesson";const STUDENT_CODE="700fd454c53e57244dd017cc008b8654";const KEY={"f7_1": ["S"], "f7_2": ["C"], "f7_3": ["C"], "f7_4": ["S"], "f7_5": ["C"], "f7_6": ["S"], "f7_7": ["C"], "f7_8": ["C"], "f8_1": ["can we move to", "could we move to"], "f8_2": ["this a good moment to start talking about the"], "f8_3": ["get to the", "come to the"], "f8_4": ["in a moment"], "f8_5": ["reminds me"], "f8_6": ["will be plenty of time for that later", "’ll be plenty of time for that later", "'ll be plenty of time for that later"], "pr_1": ["extra"], "pr_2": ["no"], "pr_3": ["extra"], "pr_4": ["no"], "pr_5": ["no"], "pr_6": ["extra"], "pr_7": ["extra"], "pr_8": ["no"]};
 const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(async r=>{const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null});
 const $=id=>document.getElementById(id);let student="",timer=null,submitted=false,ready=false;
 const norm=s=>(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").replace(/[.!?]+$/,"").trim();
@@ -67,8 +67,9 @@ function buildCtx(){const c={};let i=0;document.querySelectorAll("section.sec").
  sec.querySelectorAll("[data-k]").forEach(el=>{const k=el.dataset.k;if(!k||c[k])return;c[k]={s:st,q:_prompt(el),i:i++}})});
  c.self={s:"Self-assessment",q:"0–5",i:i++};c.q={s:"Questions for the teacher",q:"",i:i++};return c}
 function collect(){const a={};document.querySelectorAll("input.g[data-k],select.g[data-k],textarea.g[data-k]").forEach(x=>a[x.dataset.k]=x.value);
- document.querySelectorAll("input[type=radio][data-k]:checked").forEach(x=>a[x.dataset.k]=x.value);const s=document.querySelector("#score .on");a.self=s?+s.dataset.v:null;if(!CTX)CTX=buildCtx();a._ctx=CTX;a._page=location.href.split("?")[0];a._sent=sentBy;return a}
-function fill(a){document.querySelectorAll("input.g[data-k],select.g[data-k],textarea.g[data-k]").forEach(x=>{if(a[x.dataset.k]!=null)x.value=a[x.dataset.k]});
+ document.querySelectorAll("input[type=radio][data-k]:checked").forEach(x=>a[x.dataset.k]=x.value);const s=document.querySelector("#score .on");a.self=s?+s.dataset.v:null;if(!CTX)CTX=buildCtx();a._ctx=CTX;a._page=location.href.split("?")[0];a._sent=sentBy;
+ if(Object.keys(SKILLS).length){const nm={};for(const k in CTX){const p=k.replace(/_[^_]+$/,"");if(SKILLS[p]&&!nm[p])nm[p]=("Step "+(CTX[k].s||"")).replace(/[🔍💭✍️🔎⚖️🛠]\uFE0F?\s*(Remember|Understand|Apply|Analyse|Evaluate|Create)\s*/u,"").replace(/^Step (\S+) · \1 ([A-H]) /,"Step $1$2 · ").replace(/^Step (\S+) · \1 /,"Step $1 · ").slice(0,80)}a._meta={stage:STAGE,skills:SKILLS,names:nm,checked:[...CHECKED].filter(p=>SKILLS[p])}}return a}
+function fill(a){if(a&&a._meta&&a._meta.checked)a._meta.checked.forEach(p=>CHECKED.add(p));document.querySelectorAll("input.g[data-k],select.g[data-k],textarea.g[data-k]").forEach(x=>{if(a[x.dataset.k]!=null)x.value=a[x.dataset.k]});
  document.querySelectorAll("input[type=radio][data-k]").forEach(x=>x.checked=a[x.dataset.k]===x.value);document.querySelectorAll("#score button").forEach(b=>b.classList.toggle("on",a.self!=null&&+b.dataset.v===a.self));if(window.afterFill)afterFill()}
 function scores(){const a=collect(),r={};for(const k in KEY){const p=k.replace(/_[^_]+$/,"");r[p]=r[p]||[0,0];r[p][1]++;if(a[k]!=null&&okv(k,a[k]))r[p][0]++}const o={};for(const p in r)o[p]=r[p][0]+"/"+r[p][1];return o}
 function status(t,c=""){$("st").textContent=t;$("st").className="st "+c}
@@ -84,22 +85,33 @@ function teacherView(d){const a=d.answers||{};fill(a);document.body.classList.ad
  document.querySelectorAll("input.g,textarea.g").forEach(x=>x.readOnly=true);document.querySelectorAll("select.g,input[type=radio]").forEach(x=>x.disabled=true);
  if(window.afterFill)afterFill();const post=()=>parent.postMessage({tvHeight:document.documentElement.scrollHeight},"*");post();setTimeout(post,800);setTimeout(post,2500)}
 async function start(){let a=null;if(VIEW){status("Teacher view");addEventListener("message",e=>{if(e.data&&e.data.tv)teacherView(e.data.tv)});parent.postMessage({tvReady:1},"*");return}if(STUDENT_CODE){try{const r=await rpc("get_my_hw",{p_code:STUDENT_CODE,p_lesson:LESSON});const d=r&&r[0];
- if(d){student=d.name;if(d.answers){a=d.answers;submitted=!!d.submitted;sentBy=a._sent||(submitted?"button":"");if(sentBy==="button")$("done").style.display="block";updSubmit()}if(d.teacher_comment){$("tcomt").textContent=d.teacher_comment;$("tcom").style.display="block"}}}catch(e){}}
+ if(d){student=d.name;if(d.answers){a=d.answers;submitted=!!d.submitted;sentBy=a._sent||(submitted?"button":"");if(sentBy==="button")$("done").style.display="block";updSubmit();sentLabel()}if(d.teacher_comment){$("tcomt").textContent=d.teacher_comment;$("tcom").style.display="block"}}}catch(e){}}
  if(!a){try{a=JSON.parse(localStorage.getItem("hw:"+LESSON+":"+(STUDENT_CODE||"preview"))||localStorage.getItem("hw:"+LESSON+":preview")||"null")}catch(e){}}if(a)fill(a);ready=true;if(STUDENT_CODE&&a&&!a._ctx)save();
  if(!STUDENT_CODE)status("Template preview — answers are not sent anywhere.");else status(student?(a?"Welcome back, "+student+"! Your answers are loaded.":"Hi, "+student+"! Your answers save automatically."):"Your answers save automatically.","ok")}
 function fbk(k,ok,txt){const f=$("fb_"+k);if(!f)return;f.className="fb show "+(ok?"ok":"no");f.querySelector(".h").innerHTML=txt}
-function chkSet(p){let n=0,t=0;for(const k in KEY){if(k.replace(/_[^_]+$/,"")!==p)continue;const el=document.querySelector(`.g[data-k="${k}"]`);if(!el)continue;t++;const ok=okv(k,el.value);if(ok)n++;
- el.classList.remove("right","wrong");el.classList.add(ok?"right":"wrong");fbk(k,ok,ok?"✓":"✗ <b>"+KEY[k][0]+"</b>")}$("r_"+p).textContent=n+" / "+t+(n===t?" ✓ Well done!":"");save()}
-function chkRad(p,why){let n=0,t=0;for(const k in KEY){if(k.replace(/_[^_]+$/,"")!==p)continue;t++;const s=document.querySelector(`input[data-k="${k}"]:checked`);const ok=!!s&&okv(k,s.value);if(ok)n++;
- const w=(why&&why[k])?" "+why[k]:"";fbk(k,ok,(ok?"✓":"✗ <b>"+KEY[k][0]+"</b>")+w)}$("r_"+p).textContent=n+" / "+t+(n===t?" ✓ Well done!":"");save()}
-function model(id){$(id).classList.toggle("show")}
+const TRY={};function tryNo(p){TRY[p]=(TRY[p]||0)+1;return VIEW||TRY[p]>=2}function revealed(p){return VIEW||(TRY[p]||0)>=2||_allOk[p]}const _allOk={};
+function chkSet(p){const rv=tryNo(p);let n=0,t=0;for(const k in KEY){if(k.replace(/_[^_]+$/,"")!==p)continue;const el=document.querySelector(`.g[data-k="${k}"]`);if(!el)continue;t++;const ok=okv(k,el.value);if(ok)n++;
+ el.classList.remove("right","wrong");el.classList.add(ok?"right":"wrong");fbk(k,ok,ok?"✓":(rv?"✗ <b>"+KEY[k][0]+"</b>":"✗ Not yet – try again"))}_allOk[p]=n===t;$("r_"+p).textContent=n+" / "+t+(n===t?" ✓ Well done!":(rv?"":" · fix the red ones and press Check again"));save()}
+function chkRad(p,why){const rv=tryNo(p);let n=0,t=0;for(const k in KEY){if(k.replace(/_[^_]+$/,"")!==p)continue;t++;const s=document.querySelector(`input[data-k="${k}"]:checked`);const ok=!!s&&okv(k,s.value);if(ok)n++;
+ const w=(why&&why[k]&&(ok||rv))?" "+why[k]:"";fbk(k,ok,(ok?"✓":(rv?"✗ <b>"+KEY[k][0]+"</b>":"✗ Not yet – try again"))+w)}_allOk[p]=n===t;$("r_"+p).textContent=n+" / "+t+(n===t?" ✓ Well done!":(rv?"":" · fix the red ones and press Check again"));save()}
+function _fieldFor(b){let e=b;for(let i=0;i<4&&e;i++){let p=e.previousElementSibling;for(let j=0;p&&j<4;j++,p=p.previousElementSibling){if(p.matches("textarea.g,input.g:not([type=hidden])"))return p;const q=p.querySelector&&[...p.querySelectorAll("textarea.g,input.g:not([type=hidden])")].pop();if(q)return q}e=e.parentElement;if(e&&e.matches("section,.sec"))break}return null}
+function model(id){const m=$(id);if(!m)return;if(!VIEW&&!m.classList.contains("show")){const b=document.querySelector(`button[onclick="model('${id}')"]`);if(b&&/model|answer/i.test(b.textContent)){const f=_fieldFor(b);if(f){const n=(f.value.match(/\S+/g)||[]).length;
+ if(n<5){let w=b.nextElementSibling&&b.nextElementSibling.classList.contains("mgate")?b.nextElementSibling:null;if(!w){w=document.createElement("span");w.className="hint mgate";w.style.marginLeft="10px";b.after(w)}w.textContent="✍️ Write your own answer first – at least 5 words ("+n+"/5).";f.focus();return}
+ const w=b.parentElement.querySelector(".mgate");if(w)w.remove()}}}m.classList.toggle("show")}
 document.querySelectorAll("#score button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#score button").forEach(x=>x.classList.remove("on"));b.classList.add("on");later()});
 document.addEventListener("input",e=>{if(e.target.closest("main"))later()});document.addEventListener("change",e=>{if(e.target.closest("main"))later()});
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.sec").forEach(x=>x.classList.remove("on"));b.classList.add("on");$(b.dataset.s).classList.add("on");scrollTo(0,0)});
-$("submit").onclick=async()=>{submitted=true;sentBy="button";await save();$("done").style.display="block"};
+function emptyTasks(){const opt=new Set([...document.querySelectorAll("nav button.opt")].map(b=>b.dataset.s));const miss={};
+ document.querySelectorAll("section.sec").forEach(sec=>{if(opt.has(sec.id))return;const nb=document.querySelector('nav button[data-s="'+sec.id+'"]');const lab=nb?nb.textContent.replace(/[^0-9A-Za-z]/g,""):"";
+  const seen={};sec.querySelectorAll("textarea.g[data-k],input.g[data-k]:not([type=hidden]),select.g[data-k],input[type=radio][data-k]").forEach(x=>{const k=x.dataset.k;if(k==="q"||k==="_hist")return;const c=x.closest(".card");if(c&&/★\s*Advanced/.test((c.querySelector("b")||{}).textContent||""))return;
+   const p=k.replace(/_[^_]+$/,"");const filled=x.type==="radio"?!!sec.querySelector('input[type=radio][data-k="'+k+'"]:checked'):!!String(x.value||"").trim();seen[p]=seen[p]||{e:false};if(!filled)seen[p].e=true});
+  Object.keys(seen).forEach(p=>{if(seen[p].e)(miss[lab]=miss[lab]||[]).push(p)})});let n=0;const st=[];for(const l in miss){n+=miss[l].length;st.push(l)}return{n,st}}
+function sentLabel(){const s=$("submit");if(s&&sentBy==="button")s.textContent="Sent ✓ · Send again"}
+$("submit").onclick=async()=>{const e=emptyTasks();if(e.n&&!confirm(e.n+(e.n===1?" task is":" tasks are")+" without an answer (Step"+(e.st.length>1?"s ":" ")+e.st.join(", ")+"). Send anyway?"))return;
+ submitted=true;sentBy="button";await save();$("done").style.display="block";sentLabel()};
 const st=document.createElement("style");st.textContent=".vbox{margin:10px 0 14px;max-width:720px}.vt{font-weight:500;margin-bottom:4px}.vt .vn{color:#c2185b;font-weight:600;margin-right:6px}.vt a{font-size:13px;color:#c2185b;margin-left:8px}.fr{position:relative;padding-top:56.25%}.fr iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.oh{color:#c4642a;margin:6px 0}.dlg p{margin:6px 0;line-height:2.2}";document.head.appendChild(st);
 let sentBy="";
-document.addEventListener("click",e=>{if(typeof VIEW!=="undefined"&&VIEW)return;const b=e.target.closest("button");if(b&&b.id!=="submit"&&b.closest("main")&&/^check/i.test(b.textContent.trim())){submitted=true;if(!sentBy)sentBy="check";later()}},true);
+document.addEventListener("click",e=>{if(typeof VIEW!=="undefined"&&VIEW)return;const b=e.target.closest("button");if(b&&b.id!=="submit"&&b.closest("main")&&/^check/i.test(b.textContent.trim())){const m=(b.getAttribute("onclick")||"").match(/chk[A-Za-z]*\(\s*'([^']+)'/);if(m)CHECKED.add(m[1]);submitted=true;if(!sentBy)sentBy="check";later()}},true);
 function updSubmit(){const s=$("submit");if(!s)return;const w=s.closest(".ctl")||s.parentElement;const secs=[...document.querySelectorAll("section.sec")];const show=secs.length<2||secs[secs.length-1].classList.contains("on");w.style.display=show?"":"none";const d=$("done");if(d)d.style.display=(show&&sentBy==="button")?"block":"none"}
 document.addEventListener("click",e=>{if(e.target.closest("nav button"))setTimeout(updSubmit,0)});updSubmit();
 function navH(){const n=document.querySelector("nav.stk");return (n?n.offsetHeight:0)+10}
@@ -131,5 +143,23 @@ function goStep(b){if(!b)return;b.click();setTimeout(()=>{const s=document.query
    const res=document.getElementById("r_"+p);if(res)res.textContent="";if(typeof ECT!=="undefined")Object.keys(ECT).forEach(k=>{if(pref(k)===p)delete ECT[k]});
    if(typeof navUpd==="function")navUpd();const first=els.find(e=>e.type!=="radio");if(first)first.focus();if(typeof later==="function")later()};
   b.after(r)})})();
+(function(){
+ const grow=t=>{if(!t||t.tagName!=="TEXTAREA"||!t.offsetParent)return;t.style.overflowY="hidden";t.style.height="auto";t.style.height=(t.scrollHeight+4)+"px"};
+ window.growAll=()=>document.querySelectorAll("section.sec.on textarea.g, body.tv textarea.g").forEach(grow);
+ document.addEventListener("input",e=>grow(e.target));document.addEventListener("click",e=>{if(e.target.closest("nav button,.nextbar button"))setTimeout(growAll,60)});
+ const _af=window.afterFill;window.afterFill=()=>{_af&&_af();setTimeout(growAll,30)};[300,1200].forEach(t=>setTimeout(growAll,t));
+ const g={};document.querySelectorAll("main input[type=radio][data-k]").forEach(r=>{(g[r.name]=g[r.name]||[]).push(r)});
+ Object.values(g).forEach(rs=>{if(rs.length<3)return;const ls=rs.map(r=>r.closest("label"));if(ls.some(l=>!l||l.parentElement!==ls[0].parentElement))return;if(ls.some(l=>/^\s*[A-Da-d1-4][.)]\s/.test(l.textContent)))return;
+  const par=ls[0].parentElement,anchor=ls[ls.length-1].nextSibling;for(let i=ls.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ls[i],ls[j]]=[ls[j],ls[i]]}ls.forEach(l=>par.insertBefore(l,anchor))});
+ const st=document.createElement("style");st.textContent="textarea.g{resize:vertical}@media(max-width:800px){main .btn,.ctl .btn,nav button{min-height:44px!important}}body.typing #vkFab{opacity:0!important;pointer-events:none!important}main{padding-bottom:90px}.vshow{background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;font-size:13px;padding:6px 0}";document.head.appendChild(st);
+ document.addEventListener("focusin",e=>{if(e.target.matches("textarea,input:not([type=radio]):not([type=checkbox]),select"))document.body.classList.add("typing")});document.addEventListener("focusout",()=>document.body.classList.remove("typing"));
+ const gs=[...document.querySelectorAll("details.voc .vg")];const nums=t=>{const s=new Set();(t.match(/\d+\s*[–-]\s*\d+|\d+/g)||[]).forEach(x=>{const m=x.split(/\s*[–-]\s*/).map(Number);if(m.length===2)for(let i=m[0];i<=m[1];i++)s.add(i);else s.add(m[0])});return s};
+ const map=gs.map(v=>{const h=v.querySelector("h4");const t=h?h.textContent:"";return{v,s:/step/i.test(t)?nums(t):null}});
+ if(map.some(x=>x.s)&&!VIEW){let all=false;const box=document.querySelector("details.voc .vgs");const tg=document.createElement("button");tg.type="button";tg.className="vshow";box.after(tg);
+  const upd=()=>{const on=document.querySelector("nav button.on");const n=on?parseInt(on.textContent.replace(/\D/g,""),10):0;const any=map.some(x=>x.s&&x.s.has(n));
+   map.forEach(x=>x.v.style.display=(all||!any||!x.s||x.s.has(n))?"":"none");tg.style.display=any?"":"none";tg.textContent=all?"Show only the words for this step":"Show all the words of the lesson";tg.style.margin="0 16px 10px"};
+  tg.onclick=()=>{all=!all;upd()};document.addEventListener("click",e=>{if(e.target.closest("nav button,.nextbar button"))setTimeout(upd,40)});upd()}
+ document.querySelectorAll(".redo").forEach(r=>r.addEventListener("click",()=>{if(r.textContent.indexOf("↺")===0){const b=r.parentElement.querySelector("button[onclick]");const m=b&&b.getAttribute("onclick").match(/chk[A-Za-z]*\(\s*'([^']+)'/);if(m){TRY[m[1]]=0;_allOk[m[1]]=false}}}));
+})();
 start();
 </script><script src="https://villevian.github.io/bp-admin/vocab-kit.js" defer></script></body></html>
