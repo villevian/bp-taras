@@ -83,6 +83,7 @@ h2.sec{font-size:20px;margin:0 0 12px;letter-spacing:-.3px;scroll-margin-top:12p
 .rt{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
 .rt div{flex:1;min-width:150px;border-radius:11px;padding:9px 11px;background:#f1f3f7;font-size:13px;color:var(--ink2)}
 .rt div b{display:block;color:var(--ink);font-size:14px}.rt div.now{background:var(--bl2);color:var(--bl)}.rt div.now b{color:var(--bl)}
+.lhs{margin-top:10px;border-top:1px solid #eef0f5;padding-top:6px}.lh{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink2);padding:3px 0}.lh small{color:var(--mut)}
 .pl .row3{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
 .pg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:14px}
 .pg2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;margin-bottom:14px}
@@ -130,6 +131,102 @@ footer{color:var(--mut);font-size:12.5px;margin-top:30px}
  .tfoot{display:block!important}
 }
 .tfoot{display:none;text-align:center;margin-top:18px}.tfoot button{background:none;border:0;color:var(--mut);font:inherit;font-size:12.5px;text-decoration:underline;min-height:44px;cursor:pointer}
+</style>
+<style id="glass">
+/* ===== Liquid Glass · crisp lines — spec: drafts/DESIGN-glass.md =====
+   Two materials (as in Apple's Liquid Glass): GLASS for navigation & controls that float above content,
+   FROST (almost opaque) for content cards so text always reads. Edges: 1px hairline + brighter top edge.
+   Radii are concentric: inner = outer − padding. Spacing on an 8px grid. */
+:root{--ink:#11132a;--ink2:#454a66;--mut:#6c7190;--lil:#6d5ce8;--lil2:#efecff;
+ --hair:rgba(17,19,42,.08);--hair2:rgba(17,19,42,.05);
+ --frost:rgba(255,255,255,.86);--glass:rgba(255,255,255,.46);
+ --edge:linear-gradient(180deg,rgba(255,255,255,.98),rgba(255,255,255,.35) 38%,rgba(17,19,42,.10));
+ --r:24px;--r2:16px;--r3:12px;--pad:20px;
+ --sh:0 1px 1px rgba(17,19,42,.04),0 6px 20px -6px rgba(17,19,42,.08);
+ --sh2:0 1px 1px rgba(17,19,42,.05),0 18px 40px -16px rgba(60,50,150,.22)}
+body{background:#f4f4f9;font-feature-settings:"cv11","ss01"}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:radial-gradient(60% 50% at 90% 0%,#e9e5ff 0,transparent 65%),radial-gradient(50% 45% at 0% 100%,var(--acc2) 0,transparent 65%),linear-gradient(180deg,#fafafd,#f3f3f9)}
+.num,.sk .v,.big,.fb b,table.g{font-variant-numeric:tabular-nums}
+/* FROST: content cards */
+.card,.unit,.pl .dy,.rt div{background:var(--frost)!important;border:1px solid var(--hair)!important;box-shadow:var(--sh),inset 0 1px 0 rgba(255,255,255,.9);
+ -webkit-backdrop-filter:blur(24px) saturate(1.3);backdrop-filter:blur(24px) saturate(1.3)}
+.card{border-radius:var(--r);padding:var(--pad) calc(var(--pad) + 2px)}
+.card h3{color:var(--lil);font-size:11px;letter-spacing:1px;margin-bottom:12px}
+/* GLASS: navigation, hero frame, floating badges, controls — gradient edge brightest at the top */
+aside,.gf .frame,.fb,.tb,.warn{border:1px solid transparent!important;
+ background:linear-gradient(var(--glass),var(--glass)) padding-box,var(--edge) border-box!important;
+ -webkit-backdrop-filter:blur(30px) saturate(1.8);backdrop-filter:blur(30px) saturate(1.8);box-shadow:var(--sh2),inset 0 1px 0 rgba(255,255,255,.8)}
+.app{grid-template-columns:264px minmax(0,1fr)}
+aside{border-radius:28px;margin:16px 0 16px 16px;height:calc(100vh - 32px);top:16px;padding:12px}
+.me{padding:8px 8px 16px;border-bottom:1px solid var(--hair2)}.nvsep{background:var(--hair2)}
+.av{border-radius:var(--r2);background:var(--ink)}
+.nv{border-radius:16px;color:var(--ink2);min-height:44px;padding:8px 12px}        /* 28 − 12 = 16: concentric with the sidebar */
+.nv:hover{background:rgba(255,255,255,.55)}
+.nv[aria-current="true"]{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 0 0 1px var(--hair),0 2px 6px rgba(17,19,42,.06)}
+.nv[aria-current="true"]:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--lil);margin-left:auto}
+.tch{background:rgba(255,255,255,.7)!important;border:1px solid var(--hair)!important;border-radius:16px;margin:8px 0 0;box-shadow:none}
+.tbtn{background:#fff;border:1px solid var(--hair);border-radius:999px}
+main{padding:24px 32px 56px}.top{display:none}
+/* controls: capsules, crisp 1px edges */
+.btn{border-radius:999px;background:var(--ink);color:#fff;box-shadow:0 1px 0 rgba(255,255,255,.15) inset,0 6px 14px -6px rgba(17,19,42,.45);padding:10px 18px;min-height:44px}
+.btn:after{content:"↗";font-weight:500;opacity:.75}
+.btn.l{background:rgba(255,255,255,.9);color:var(--ink);border:1px solid var(--hair);box-shadow:0 1px 2px rgba(17,19,42,.05)}
+.btn.l:after{content:none}.btn.l:hover{background:#fff;border-color:rgba(17,19,42,.16);color:var(--ink)}
+:focus-visible{outline:2px solid var(--lil);outline-offset:2px}
+.pill{border-radius:999px;padding:2px 10px;box-shadow:inset 0 0 0 1px rgba(17,19,42,.04)}
+.bar{background:rgba(17,19,42,.06);height:6px;border-radius:999px}.bar i{background:var(--lil);border-radius:999px}
+h2.sec{font-size:22px;letter-spacing:-.4px;margin:40px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--hair)}
+h2.sec[data-e]:before{content:attr(data-e);display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--lil);font-weight:600;margin-bottom:4px}
+.stats,.pg4,.pg2,.mid{gap:16px}.stats{margin-bottom:16px}
+.mid{grid-template-columns:minmax(0,1fr)}.mid>div:first-child{display:none}
+.stats{grid-template-columns:repeat(3,minmax(0,1fr))!important}.stats>.card:first-child{display:none}
+.hw{border-top:1px solid var(--hair2)}
+.uh .ub,.ls .l .ln{background:#fff;color:var(--lil);box-shadow:0 0 0 1px var(--hair)}
+.ls{border-top:1px solid var(--hair2)}.ls .l{border-top:1px solid var(--hair2)}
+.ls .l .pg a{background:#fff;border-radius:999px;border:1px solid var(--hair)}
+.pl .dy{border-radius:var(--r2)}.pl .dy.td{background:#fff!important;box-shadow:0 0 0 2px var(--lil)}
+.rt div{border-radius:var(--r2)}.rt div.now{background:#fff!important;box-shadow:0 0 0 2px var(--lil2)}.rt div.now,.rt div.now b{color:var(--ink)}
+.q{background:var(--lil2);color:var(--ink);border-radius:var(--r3)}
+.bd span{background:rgba(17,19,42,.08)}.bd span.on{background:var(--lil)}
+#speakCard polyline{stroke:var(--lil)!important}#speakCard circle{stroke:var(--lil)!important}#speakCard circle:last-of-type{fill:var(--lil)!important}
+.warn{border-radius:999px;color:var(--ink2);text-align:center}
+.tb{background:linear-gradient(rgba(17,19,42,.86),rgba(17,19,42,.86)) padding-box,var(--edge) border-box!important;border-radius:var(--r2)}
+.modal{background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(30px);backdrop-filter:blur(30px);border:1px solid var(--hair);border-radius:28px}
+input,select{background:#fff;border:1px solid var(--hair);border-radius:var(--r3)}
+/* hero: next step first (actionable), then plan for the week */
+.gh{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:center;margin-bottom:16px;padding:32px;border-radius:32px;
+ background:var(--frost);border:1px solid var(--hair);box-shadow:var(--sh),inset 0 1px 0 #fff;-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}
+.gh .eb{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--lil);font-weight:600}
+.gh h1{margin:8px 0 4px;font-size:44px;line-height:1.05;letter-spacing:-1.6px;color:var(--ink)}
+.gh h2{margin:0 0 8px;font-size:22px;letter-spacing:-.5px;color:var(--lil);font-weight:600}
+.gh p{margin:0 0 20px;color:var(--ink2);max-width:460px}
+.gh .ns{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 16px;border-radius:20px;background:#fff;border:1px solid var(--hair);margin-bottom:16px;max-width:520px}
+.gh .ns small{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);font-weight:600}
+.gh .ns b{display:block;font-weight:600;line-height:1.3}.gh .ns .btn{margin-left:auto;flex:none}
+.gh .bs{display:flex;flex-wrap:wrap;gap:8px}
+.wk7{display:flex;gap:6px;margin-top:20px;padding-top:16px;border-top:1px solid var(--hair2);flex-wrap:wrap;align-items:center}
+.wk7 span{width:40px;text-align:center;padding:6px 0;border-radius:var(--r3);font-size:12px;color:var(--mut);border:1px solid transparent}
+.wk7 span b{display:block;font-size:14px;color:var(--ink2)}
+.wk7 span.on{border-color:var(--hair);background:#fff}.wk7 span.on b{color:var(--ink)}
+.wk7 span.td{border-color:var(--lil);box-shadow:0 0 0 1px var(--lil)}
+.wk7 em{font-style:normal;font-size:13px;color:var(--mut);margin-left:8px}
+.gh .note{margin-top:16px;background:var(--lil2);border-radius:var(--r2);padding:12px 16px;font-size:13.5px;color:var(--ink)}
+.gf{position:relative;display:flex;align-items:center;justify-content:center;padding:16px}
+.gf .frame{position:relative;width:100%;max-width:420px;border-radius:32px;padding:16px;overflow:hidden}
+.gf .frame:before{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;   /* specular sheen */
+ background:linear-gradient(115deg,rgba(255,255,255,.55) 0,rgba(255,255,255,0) 32%,rgba(255,255,255,0) 70%,rgba(255,255,255,.25))}
+.gf svg{width:100%;height:auto;display:block;border-radius:16px}                  /* 32 − 16 = 16 */
+.fb{position:absolute;border-radius:20px;padding:10px 14px;font-size:11.5px;color:var(--mut)}
+.fb b{display:block;font-size:24px;color:var(--ink);letter-spacing:-.6px;line-height:1.1}
+.fb.t{top:0;right:0;text-align:center}.fb.b{bottom:0;right:24px;min-width:150px}.fb.b b{font-size:18px}
+.fb svg{width:120px;height:28px;margin-top:4px}
+@media(max-width:1060px){.gh{grid-template-columns:1fr}}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}aside{margin:8px;height:auto;top:8px;border-radius:22px;padding:6px}
+ .app{grid-template-columns:minmax(0,1fr)}main{padding:12px 16px 44px}.gh{padding:20px 16px;border-radius:24px;gap:16px}.gh h1{font-size:34px}.gh h2{font-size:19px}
+ .gh .ns{flex-wrap:wrap}.gh .ns .btn{margin-left:0;width:100%;justify-content:center}.wk7 span{width:36px}}
+@media(prefers-reduced-transparency:reduce){.card,.unit,aside,.gh,.gf .frame,.fb,.tch,.rt div,.pl .dy,.warn{background:#fff!important;-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media(prefers-contrast:more){:root{--hair:rgba(17,19,42,.35);--hair2:rgba(17,19,42,.2)}}
 </style></head><body>
 <a class="skip" href="#top">Skip to content</a>
 <div class="app">
@@ -155,6 +252,7 @@ footer{color:var(--mut);font-size:12.5px;margin-top:30px}
 
  <div class="top"><div><h1 id="hi"></h1><p id="today"></p></div><div class="ring" id="ring"></div></div>
 
+ <section class="gh" id="gh" aria-label="Welcome"></section>
  <div class="warn" id="offline" role="status"></div>
  <div class="stats" id="stats"></div>
 
@@ -165,14 +263,14 @@ footer{color:var(--mut);font-size:12.5px;margin-top:30px}
 
  <div id="plan"></div>
 
- <h2 class="sec" id="progress">📊 My progress</h2>
+ <h2 class="sec" id="progress" data-e="Your growth">My progress</h2>
  <div class="card" id="gradeCard" style="display:none;margin-bottom:14px"></div>
  <div class="card" id="speechEdit" style="display:none;margin-bottom:14px"></div>
  <div class="pg4" id="skills"></div>
  <div class="pg2"><div class="card" id="speakCard"></div><div class="card" id="vocabCard"></div></div>
  <div class="card" id="gramCard" style="margin-bottom:26px"></div>
 
- <h2 class="sec" id="course">📘 My course</h2>
+ <h2 class="sec" id="course" data-e="All units">My course</h2>
  <div id="units"></div>
 
  <div class="tfoot"><button type="button" id="bTeacher2">Teacher mode</button></div>
@@ -188,7 +286,7 @@ footer{color:var(--mut);font-size:12.5px;margin-top:30px}
 </div></div>
 
 <script>
-const D={"units": [{"u": "1", "t": "Career choices", "ls": [{"n": "1.1", "t": "Transferable skills", "d": "Skills that survive AI · Vocabulary: transferable skills · Project: a job description for a remote tech role", "open": true, "tr": "all", "pages": ["flip", "lesson", "speak", "hw", "words", "clean", "extra"], "classic": false}, {"n": "1.2", "t": "Career advice and career switching", "d": "Advice and suggestions · Improving a LinkedIn profile · Switching to tech", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.3", "t": "Building rapport", "d": "Questions to build rapport on video calls and at events", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.4", "t": "Networking", "d": "Networking at meetups, online events and on LinkedIn", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.5", "t": "Writing: Introducing yourself", "d": "LinkedIn / Slack intro message · Adverbs of degree", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W1", "t": "Workshop: Remote hiring", "d": "Online job interviews · Discuss candidates", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "2", "t": "Business sectors", "ls": [{"n": "2.1", "t": "Growing sectors: tech, AI, green energy", "d": "Vocabulary: sectors and industries · Research a sector", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.2", "t": "The energy industry", "d": "Past Simple & Continuous · A short story", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.3", "t": "Dealing with interruptions", "d": "Interrupting politely in video meetings", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.4", "t": "Voice messages", "d": "Voicemail → voice notes and short async videos (Loom, Telegram)", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.5", "t": "Writing: Action points", "d": "Meeting notes and action items in Slack / Notion / Jira · will & going to", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W2", "t": "Workshop: Investing your money", "d": "Investor’s checklist · Choose a company to invest in", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "3", "t": "Projects", "ls": [{"n": "3.1", "t": "Project management", "d": "Managing projects: Agile, sprints, Jira · Word building", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.2", "t": "Large-scale projects", "d": "Comparatives & superlatives · Choosing the winning bid", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.3", "t": "Giving instructions", "d": "Giving and responding to instructions, standing your ground", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.4", "t": "Updates and action", "d": "Stand-ups and status updates · Jira board", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.5", "t": "Writing: Requesting an update", "d": "Slack message / Jira comment requesting an update · (not) enough", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W3", "t": "Workshop: Prioritising a launch", "d": "Understand priorities · Hold a project meeting", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "4", "t": "Global markets", "ls": [{"n": "4.1", "t": "One size fits all?", "d": "Global markets vocabulary · Adapt a product to a new market", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.2", "t": "Back to the office?", "d": "Present Simple & Past Simple passive · Remote vs office work: Zoom, Slack, Notion, Jira · Extra: have something done", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.3", "t": "Managing conversations", "d": "Changing the subject and staying on track · Video: Beata & Mateo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.4", "t": "Building consensus", "d": "Reaching agreement in meetings and async threads", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.5", "t": "Writing: Confirming an order", "d": "Order confirmation in chat / CRM · Verbs + prepositions", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W4", "t": "Workshop: Going global online", "d": "Sell abroad via Etsy / Shopify · Choose a strategy", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "5", "t": "Design and innovation", "ls": [{"n": "5.1", "t": "AI-powered products", "d": "Technological innovation · Describing innovative products", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.2", "t": "Product testing", "d": "Present Perfect with just, already, yet · Beta and user testing", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.3", "t": "Managing information", "d": "Asking open and closed questions · Feedback on presentations", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.4", "t": "Selling a product", "d": "Features and benefits · A product demo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.5", "t": "Writing: A product review", "d": "App Store / G2 review · Order of adjectives", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W5", "t": "Workshop: Smart wearables", "d": "Market research · Choose a product to develop", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "6", "t": "Safety and security", "ls": [{"n": "6.1", "t": "Wellbeing at work", "d": "Health and safety · Burnout, stress and work-life balance", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.2", "t": "Cybersecurity at work", "d": "Modals of obligation · Phishing, passwords, 2FA", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.3", "t": "Dealing with disagreement", "d": "Explaining rules and requirements", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.4", "t": "Dealing with conflict", "d": "Resolving a conflict in a team", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.5", "t": "Writing: Guidelines and warnings", "d": "Security guidelines for remote staff in Notion · Linking words for time", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W6", "t": "Workshop: Onboarding safely", "d": "Risk assessment · A security report for new employees", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "7", "t": "Customer service", "ls": [{"n": "7.1", "t": "Customer service in apps", "d": "Customer service vocabulary · Design a premium service", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.2", "t": "Chatbots vs humans", "d": "Verb + to-infinitive or -ing · AI in customer support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.3", "t": "Responding to customer concerns", "d": "Customer complaints in chat support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.4", "t": "Generating and presenting ideas", "d": "Discussing and presenting ideas", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.5", "t": "Writing: A ‘thank you’ message", "d": "Thank-you message to a client in chat or LinkedIn · some, any, all, most, no, none", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W7", "t": "Workshop: Bad reviews online", "d": "Dealing with angry customers · Turn failure into success", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "8", "t": "Communication", "ls": [{"n": "8.1", "t": "Face to face or online?", "d": "Digital communication · Communication survey", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.2", "t": "Too many notifications", "d": "First & second conditional · Async communication and focus", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.3", "t": "Closing a deal", "d": "Trying to close a deal", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.4", "t": "Talking about priorities", "d": "Prioritising tasks and the backlog", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.5", "t": "Writing: A short report", "d": "Short summary in Notion, drafted with AI · Past Perfect Simple", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W8", "t": "Workshop: Communication in a distributed team", "d": "Communication problems · Recommend improvements", "open": false, "tr": null, "pages": [], "classic": false}]}], "student": {"name": "Taras", "code": "700fd454c53e57244dd017cc008b8654"}, "links": [["vocab.html", "📚", "My vocabulary"], ["glossary.html", "📖", "Glossary"], ["https://villevian.github.io/bp-a2plus/grammar/", "📐", "Grammar"]], "plan": {"start": "2026-11-26", "days": [1, 2, 3, 4], "time": "14:00", "tz": "Europe/Kyiv", "rhythm": "Mon–Thu, one lesson a day", "level": "Stage 1", "goal": "2027-12-31", "goal_text": "Confident English for an international team", "route": [["Stage 1", "2026-11-25", "2027-03-15"], ["Stage 2", "2027-03-16", "2027-07-31"], ["Stage 3", "2027-09-01", "2027-12-31"]]}, "progress": {"skillsShown": [["listening", "Listening"], ["speaking", "Speaking"], ["vocabulary", "Vocabulary"], ["grammar", "Grammar"]], "rubric": [["fluency", "Fluency", ["Very hesitant", "Frequent long pauses", "Keeps going with effort", "Mostly smooth", "Natural flow"]], ["accuracy", "Accuracy", ["Errors block meaning", "Frequent basic errors", "Controls simple forms", "Good control, some slips", "Consistently accurate"]], ["range", "Range of language", ["Very basic words", "Limited, repeats a lot", "Enough for familiar topics", "Varied, some idiom", "Wide and precise"]], ["pron", "Pronunciation", ["Hard to follow", "Needs effort to follow", "Clear overall", "Easy to follow", "Clear with natural stress"]]], "green": [120, 150], "tasks": [], "speech": [], "vocabStats": null}, "build": "202611271834"};
+const D={"units": [{"u": "1", "t": "Career choices", "ls": [{"n": "1.1", "t": "Transferable skills", "d": "Skills that survive AI · Vocabulary: transferable skills · Project: a job description for a remote tech role", "open": true, "tr": "all", "pages": ["flip", "lesson", "speak", "hw", "words", "clean", "extra"], "classic": false}, {"n": "1.2", "t": "Career advice and career switching", "d": "Advice and suggestions · Improving a LinkedIn profile · Switching to tech", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.3", "t": "Building rapport", "d": "Questions to build rapport on video calls and at events", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.4", "t": "Networking", "d": "Networking at meetups, online events and on LinkedIn", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.5", "t": "Writing: Introducing yourself", "d": "LinkedIn / Slack intro message · Adverbs of degree", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W1", "t": "Workshop: Remote hiring", "d": "Online job interviews · Discuss candidates", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "2", "t": "Business sectors", "ls": [{"n": "2.1", "t": "Growing sectors: tech, AI, green energy", "d": "Vocabulary: sectors and industries · Research a sector", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.2", "t": "The energy industry", "d": "Past Simple & Continuous · A short story", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.3", "t": "Dealing with interruptions", "d": "Interrupting politely in video meetings", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.4", "t": "Voice messages", "d": "Voicemail → voice notes and short async videos (Loom, Telegram)", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.5", "t": "Writing: Action points", "d": "Meeting notes and action items in Slack / Notion / Jira · will & going to", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W2", "t": "Workshop: Investing your money", "d": "Investor’s checklist · Choose a company to invest in", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "3", "t": "Projects", "ls": [{"n": "3.1", "t": "Project management", "d": "Managing projects: Agile, sprints, Jira · Word building", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.2", "t": "Large-scale projects", "d": "Comparatives & superlatives · Choosing the winning bid", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.3", "t": "Giving instructions", "d": "Giving and responding to instructions, standing your ground", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.4", "t": "Updates and action", "d": "Stand-ups and status updates · Jira board", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.5", "t": "Writing: Requesting an update", "d": "Slack message / Jira comment requesting an update · (not) enough", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W3", "t": "Workshop: Prioritising a launch", "d": "Understand priorities · Hold a project meeting", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "4", "t": "Global markets", "ls": [{"n": "4.1", "t": "One size fits all?", "d": "Global markets vocabulary · Adapt a product to a new market", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.2", "t": "Back to the office?", "d": "Present Simple & Past Simple passive · Remote vs office work: Zoom, Slack, Notion, Jira · Extra: have something done", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.3", "t": "Managing conversations", "d": "Changing the subject and staying on track · Video: Beata & Mateo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.4", "t": "Building consensus", "d": "Reaching agreement in meetings and async threads", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.5", "t": "Writing: Confirming an order", "d": "Order confirmation in chat / CRM · Verbs + prepositions", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W4", "t": "Workshop: Going global online", "d": "Sell abroad via Etsy / Shopify · Choose a strategy", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "5", "t": "Design and innovation", "ls": [{"n": "5.1", "t": "AI-powered products", "d": "Technological innovation · Describing innovative products", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.2", "t": "Product testing", "d": "Present Perfect with just, already, yet · Beta and user testing", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.3", "t": "Managing information", "d": "Asking open and closed questions · Feedback on presentations", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.4", "t": "Selling a product", "d": "Features and benefits · A product demo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.5", "t": "Writing: A product review", "d": "App Store / G2 review · Order of adjectives", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W5", "t": "Workshop: Smart wearables", "d": "Market research · Choose a product to develop", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "6", "t": "Safety and security", "ls": [{"n": "6.1", "t": "Wellbeing at work", "d": "Health and safety · Burnout, stress and work-life balance", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.2", "t": "Cybersecurity at work", "d": "Modals of obligation · Phishing, passwords, 2FA", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.3", "t": "Dealing with disagreement", "d": "Explaining rules and requirements", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.4", "t": "Dealing with conflict", "d": "Resolving a conflict in a team", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.5", "t": "Writing: Guidelines and warnings", "d": "Security guidelines for remote staff in Notion · Linking words for time", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W6", "t": "Workshop: Onboarding safely", "d": "Risk assessment · A security report for new employees", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "7", "t": "Customer service", "ls": [{"n": "7.1", "t": "Customer service in apps", "d": "Customer service vocabulary · Design a premium service", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.2", "t": "Chatbots vs humans", "d": "Verb + to-infinitive or -ing · AI in customer support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.3", "t": "Responding to customer concerns", "d": "Customer complaints in chat support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.4", "t": "Generating and presenting ideas", "d": "Discussing and presenting ideas", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.5", "t": "Writing: A ‘thank you’ message", "d": "Thank-you message to a client in chat or LinkedIn · some, any, all, most, no, none", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W7", "t": "Workshop: Bad reviews online", "d": "Dealing with angry customers · Turn failure into success", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "8", "t": "Communication", "ls": [{"n": "8.1", "t": "Face to face or online?", "d": "Digital communication · Communication survey", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.2", "t": "Too many notifications", "d": "First & second conditional · Async communication and focus", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.3", "t": "Closing a deal", "d": "Trying to close a deal", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.4", "t": "Talking about priorities", "d": "Prioritising tasks and the backlog", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.5", "t": "Writing: A short report", "d": "Short summary in Notion, drafted with AI · Past Perfect Simple", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W8", "t": "Workshop: Communication in a distributed team", "d": "Communication problems · Recommend improvements", "open": false, "tr": null, "pages": [], "classic": false}]}], "student": {"name": "Taras", "code": "700fd454c53e57244dd017cc008b8654"}, "links": [["vocab.html", "📚", "My vocabulary"], ["glossary.html", "📖", "Glossary"], ["https://villevian.github.io/bp-a2plus/grammar/", "📐", "Grammar"]], "plan": {"start": "2026-11-26", "days": [1, 2, 3, 4], "time": "14:00", "tz": "Europe/Kyiv", "rhythm": "Mon–Thu, one lesson a day", "level": "Stage 1", "goal": "2027-12-31", "goal_text": "Confident English for an international team", "route": [["Stage 1", "2026-11-25", "2027-03-15"], ["Stage 2", "2027-03-16", "2027-07-31"], ["Stage 3", "2027-09-01", "2027-12-31"]]}, "progress": {"skillsShown": [["listening", "Listening"], ["speaking", "Speaking"], ["vocabulary", "Vocabulary"], ["grammar", "Grammar"]], "rubric": [["fluency", "Fluency", ["Very hesitant", "Frequent long pauses", "Keeps going with effort", "Mostly smooth", "Natural flow"]], ["accuracy", "Accuracy", ["Errors block meaning", "Frequent basic errors", "Controls simple forms", "Good control, some slips", "Consistently accurate"]], ["range", "Range of language", ["Very basic words", "Limited, repeats a lot", "Enough for familiar topics", "Varied, some idiom", "Wide and precise"]], ["pron", "Pronunciation", ["Hard to follow", "Needs effort to follow", "Clear overall", "Easy to follow", "Clear with natural stress"]]], "green": [120, 150], "tasks": [], "speech": [], "vocabStats": null}, "build": "202611271908", "demo": null};
 const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
 const ALPHA=.4, STALE=28;
 
@@ -224,13 +322,13 @@ $("av").textContent=first[0]; $("nm").textContent=D.student.name;
 $("xl").innerHTML='<div class="nvsep"></div>'+D.links.map(([u,i,t])=>`<a class="nv" href="${esc(u)}"><i aria-hidden="true">${i}</i>${esc(t)}</a>`).join("");
 
 // PROG: lesson status · HWD: homework sent · CAB: cabinet · SC: raw scores from get_my_scores
-let PROG={},HWD={},SENT={},CAB={},ASG=null,SC=null,teacher=false,TKEY="",dirty=false;
+let PROG={},HWD={},SENT={},CAB={},ASG=null,LOG=[],SC=null,teacher=false,TKEY="",dirty=false;
 let MANUAL=[],AUTO=[];            // MANUAL: rows the teacher grades · AUTO: checked exercises with a skill tag (read-only)
 const CACHE="home_"+D.student.code;
 const ALL=()=>MANUAL.concat(AUTO);
 
-function loadCache(){ try{const s=localStorage.getItem(CACHE); if(s){const d=JSON.parse(s); CAB=d.CAB||{}; PROG=d.PROG||{}; HWD=d.HWD||{}; SENT=d.SENT||{}; ASG=d.ASG||null; if(d.SC)applyScores(d.SC);}}catch(e){} }
-function saveCache(){ try{localStorage.setItem(CACHE,JSON.stringify({CAB,PROG,HWD,SENT,ASG,SC,at:Date.now()}));}catch(e){} }
+function loadCache(){ try{const s=localStorage.getItem(CACHE); if(s){const d=JSON.parse(s); CAB=d.CAB||{}; PROG=d.PROG||{}; HWD=d.HWD||{}; SENT=d.SENT||{}; ASG=d.ASG||null; LOG=d.LOG||[]; if(d.SC)applyScores(d.SC);}}catch(e){} }
+function saveCache(){ try{localStorage.setItem(CACHE,JSON.stringify({CAB,PROG,HWD,SENT,ASG,LOG,SC,at:Date.now()}));}catch(e){} }
 
 function autoTasks(rows){ const out=[];
  (rows||[]).forEach(r=>{ const m=r.meta||{}, sc=r.score||{}, ln=(String(r.lesson).match(/(\d+\.\d+|W\d+)/)||[])[1]||"";
@@ -258,6 +356,11 @@ function assignList(){ const lk=n=>String(n).toUpperCase();
  if(!rows.length&&CAB.homework){ const m=String(CAB.homework_url||"").match(/lessons\/([^/]+)\/[^/]+\/([a-z]+)\.html/i);
   rows=[{title:CAB.homework,lesson:m?lk(m[1].replace(/-/g,".")):"",page:m?m[2]:"",due:CAB.homework_due,url:CAB.homework_url||"#"}]; }
  return rows.map(a=>Object.assign(a,{sent:!!SENT[a.lesson+"/"+a.page]})); }
+// lesson journal (lesson_log): done −1, bonus 0, paid +N, fix ±N
+function histHtml(){ if(!LOG.length)return ""; const nb=LOG.filter(x=>x.kind==="bonus").length;
+ const row=x=>{const d=fdate(String(x.at).slice(0,10)),t=x.kind==="done"?"✓ Lesson":x.kind==="bonus"?"🎁 Bonus lesson":x.kind==="paid"?"💳 Payment · +"+x.delta+" lessons":(x.delta>0?"+":"")+x.delta+" "+(x.note||"correction");
+  return `<div class="lh"><span>${esc(t)}${x.note&&x.kind!=="fix"&&x.kind!=="paid"?' <small>· '+esc(x.note)+'</small>':""}</span><span>${d}</span></div>`};
+ return `<div class="lhs">${LOG.slice(0,3).map(row).join("")}${nb?`<div class="lh"><small>${nb} bonus lesson${nb>1?"s":""} — free, not counted</small></div>`:""}</div>`; }
 const pill=s=>s==="done"?'<span class="pill p-ok">✓ Done</span>':s==="progress"?'<span class="pill p-wa">In progress</span>':'<span class="pill p-new">New</span>';
 function pageLinks(l){ const out=[]; l.pages.forEach(p=>{ out.push(`<a href="${path(l.n,l.tr,p)}">${NM[p]||p}</a>`);
   if(l.classic&&p==="lesson") out.push(`<a href="${path(l.n,l.tr+"-classic",p)}">Lesson · email version</a>`); }); return out.join(""); }
@@ -323,7 +426,7 @@ function render(){
  S.push(`<a class="card" href="#assignments"><h3>📝 Assignments</h3><div class="num" style="color:${aLeft?"var(--wa)":"var(--ok)"}">${aLeft}</div><div class="sub">${AL.length?(aLeft?"to do":"all done — great!"):"nothing assigned yet"}${nxDue?" · due "+fdate(nxDue):""}</div></a>`);
 
  if((CAB.payment||"private")==="private"&&CAB.lessons_left!=null){ const n=CAB.lessons_left,c=n<=0?"var(--bad)":n<=2?"var(--wa)":"var(--ok)";
-  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div></div>`); }
+  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div>${histHtml()}</div>`); }
 
  S.push(`<div class="card"><h3>📈 Lessons done</h3><div class="num">${done}<span style="font-size:18px;color:var(--mut)"> / ${OPEN.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="sub" style="margin-top:6px">of your open lessons</div></div>`);
  $("stats").innerHTML=S.join(""); $("stats").style.setProperty("--n",S.length);
@@ -365,7 +468,7 @@ function renderPlan(){ const P=D.plan;
  const rt=(P.route||[]).map(r=>{ const a=dt(r[1]),b=dt(r[2]),on=a&&b&&now>=a&&now<=b;
   return `<div class="${on?"now":""}"><b>${esc(r[0])}${on?" · now":""}</b>${fdate(r[1],{month:"short",year:"numeric"})} – ${fdate(r[2],{month:"short",year:"numeric"})}</div>`; }).join("");
  const pct=total?Math.round(done/total*100):0;
- $("plan").innerHTML=`<h2 class="sec" id="myplan">📆 My plan</h2><div class="pl"><div class="row3">
+ $("plan").innerHTML=`<h2 class="sec" id="myplan" data-e="This week">My plan</h2><div class="pl"><div class="row3">
   <div class="card"><h3>Next lessons · ${esc(P.time&&P.days?dayRange(P.days,1)+" · "+(nx?hm(nx):P.time):(P.rhythm||""))}</h3><div class="wk">${wk}</div></div>
   <div class="card"><h3>🎯 My goal</h3><div class="big">${esc(P.goal_text||"")}</div><div class="sub">${goal?"by "+goal.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}${left!=null?' · <span class="pill p-new">'+left+" days left</span>":""}</div>
   <div class="bar"><i style="width:${Math.max(2,pct)}%"></i></div><div class="sub" style="margin-top:6px">${esc(P.level||"This level")}: ${done} of ${total} lessons done</div></div></div>${rt?`<div class="rt">${rt}</div>`:""}</div>`;
@@ -534,11 +637,42 @@ function syncNav(){ const ids=["top","assignments","myplan","progress","course"]
  ids.forEach(id=>{ const el=$(id); if(el&&id!=="top"&&el.getBoundingClientRect().top<=140) cur=id; });
  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="course";
  const a=navs.find(x=>x.getAttribute("href")==="#"+cur); if(a)setCur(a); }
-loadCache(); render();
+
+const ILLU="<svg viewBox=\"0 0 380 330\" role=\"img\" aria-label=\"Illustration: an English video call with colleagues\" xmlns=\"http://www.w3.org/2000/svg\">\n<defs>\n <linearGradient id=\"gScr\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#ffffff\"/><stop offset=\"1\" stop-color=\"#eef0ff\"/></linearGradient>\n <linearGradient id=\"gLap\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#d9dcf5\"/><stop offset=\"1\" stop-color=\"#b9bde6\"/></linearGradient>\n <linearGradient id=\"gA\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#ffd9c7\"/><stop offset=\"1\" stop-color=\"#ffb79a\"/></linearGradient>\n <linearGradient id=\"gB\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#d7d2ff\"/><stop offset=\"1\" stop-color=\"#b3a9ff\"/></linearGradient>\n <linearGradient id=\"gC\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c9ecff\"/><stop offset=\"1\" stop-color=\"#9fd6f5\"/></linearGradient>\n <linearGradient id=\"gD\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#ffe0ef\"/><stop offset=\"1\" stop-color=\"#ffbfdc\"/></linearGradient>\n <filter id=\"fs\" x=\"-20%\" y=\"-20%\" width=\"140%\" height=\"140%\"><feDropShadow dx=\"0\" dy=\"8\" stdDeviation=\"9\" flood-color=\"#5b55b8\" flood-opacity=\".16\"/></filter>\n</defs>\n<ellipse cx=\"190\" cy=\"300\" rx=\"150\" ry=\"14\" fill=\"#7c74d9\" opacity=\".10\"/>\n<g filter=\"url(#fs)\">\n <rect x=\"52\" y=\"48\" width=\"276\" height=\"182\" rx=\"16\" fill=\"url(#gLap)\"/>\n <rect x=\"62\" y=\"58\" width=\"256\" height=\"162\" rx=\"10\" fill=\"url(#gScr)\"/>\n <path d=\"M30 236 h320 l-18 30 H48 z\" fill=\"url(#gLap)\"/><rect x=\"160\" y=\"240\" width=\"60\" height=\"6\" rx=\"3\" fill=\"#a9addc\"/>\n</g>\n<g>\n <rect x=\"72\" y=\"68\" width=\"114\" height=\"66\" rx=\"9\" fill=\"url(#gA)\"/><circle cx=\"129\" cy=\"94\" r=\"13\" fill=\"#fff\" opacity=\".9\"/><rect x=\"108\" y=\"111\" width=\"42\" height=\"15\" rx=\"7.5\" fill=\"#fff\" opacity=\".9\"/>\n <rect x=\"194\" y=\"68\" width=\"114\" height=\"66\" rx=\"9\" fill=\"url(#gB)\"/><circle cx=\"251\" cy=\"94\" r=\"13\" fill=\"#fff\" opacity=\".9\"/><rect x=\"230\" y=\"111\" width=\"42\" height=\"15\" rx=\"7.5\" fill=\"#fff\" opacity=\".9\"/>\n <rect x=\"72\" y=\"142\" width=\"114\" height=\"66\" rx=\"9\" fill=\"url(#gC)\"/><circle cx=\"129\" cy=\"168\" r=\"13\" fill=\"#fff\" opacity=\".9\"/><rect x=\"108\" y=\"185\" width=\"42\" height=\"15\" rx=\"7.5\" fill=\"#fff\" opacity=\".9\"/>\n <rect x=\"194\" y=\"142\" width=\"114\" height=\"66\" rx=\"9\" fill=\"url(#gD)\"/><circle cx=\"251\" cy=\"168\" r=\"13\" fill=\"#fff\" opacity=\".9\"/><rect x=\"230\" y=\"185\" width=\"42\" height=\"15\" rx=\"7.5\" fill=\"#fff\" opacity=\".9\"/>\n <rect x=\"76\" y=\"72\" width=\"30\" height=\"12\" rx=\"6\" fill=\"#fff\" opacity=\".85\"/><text x=\"91\" y=\"81\" font-size=\"8\" font-family=\"Inter,system-ui,sans-serif\" font-weight=\"700\" fill=\"#e0603a\" text-anchor=\"middle\">YOU</text>\n</g>\n<g filter=\"url(#fs)\" font-family=\"Inter,system-ui,sans-serif\">\n <rect x=\"8\" y=\"14\" width=\"150\" height=\"40\" rx=\"14\" fill=\"#fff\"/><path d=\"M40 54 l10 12 l6 -12z\" fill=\"#fff\"/>\n <text x=\"22\" y=\"39\" font-size=\"13\" font-weight=\"600\" fill=\"#1b2235\">Let\u2019s sync on Monday</text>\n <rect x=\"6\" y=\"262\" width=\"136\" height=\"40\" rx=\"14\" fill=\"#14162b\"/><path d=\"M96 262 l8 -12 l6 12z\" fill=\"#14162b\"/>\n <text x=\"22\" y=\"287\" font-size=\"13\" font-weight=\"600\" fill=\"#fff\">Sounds great! \ud83d\udc4d</text>\n</g>\n</svg>";
+function glassHero(){ const el=$("gh"); if(!el)return;
+ const cur=OPEN.find(l=>CAB.current_lesson&&String(CAB.current_lesson).startsWith(l.n))||OPEN[OPEN.length-1];
+ const h=new Date().getHours(), nx=nextLesson(), P=D.plan||{};
+ // lesson days: from the plan, or read from the cabinet text ("Wed, Fri 18:00", "Mon–Thu …")
+ const DS=["sun","mon","tue","wed","thu","fri","sat"]; let days=P.days||null;
+ if(!days&&CAB.schedule){ const t=String(CAB.schedule).toLowerCase(), r=t.match(/\b(mon|tue|wed|thu|fri|sat|sun)[a-z]*\s*[–-]\s*(mon|tue|wed|thu|fri|sat|sun)/);
+  if(r){ days=[]; for(let i=DS.indexOf(r[1]);;i=(i+1)%7){ days.push(i); if(i===DS.indexOf(r[2])||days.length>7)break; } }
+  else { const m=t.match(/\b(mon|tue|wed|thu|fri|sat|sun)/g); if(m) days=[...new Set(m.map(x=>DS.indexOf(x)))]; } }
+ const next=assignList().find(a=>!a.sent);                                    // the one actionable next step
+ const sp=D.progress.speech.slice().sort(byDate).filter(s=>s.wpm), last=sp[sp.length-1];
+ const pts=sp.map(s=>s.wpm), lo=Math.min(...pts,100), hi=Math.max(...pts,150);
+ const line=pts.length>1?pts.map((v,i)=>(i*(116/(pts.length-1))+2)+","+(26-((v-lo)/(hi-lo))*22)).join(" "):"";
+ const rel=d=>{const ms=d-new Date(),d0=new Date();d0.setHours(0,0,0,0);const dd=Math.round((new Date(d).setHours(0,0,0,0)-d0)/864e5);return ms<0?"now":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":dd===0?"today":dd===1?"tomorrow":"in "+dd+" days"};
+ // this week: Mon..Sun, lesson days from the plan, today outlined
+ const now=new Date(), mon=new Date(now); mon.setHours(0,0,0,0); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+ const wk=[0,1,2,3,4,5,6].map(i=>{const d=new Date(mon);d.setDate(mon.getDate()+i);const isL=(days||[]).includes(d.getDay()),isT=d.toDateString()===now.toDateString();
+  return `<span class="${isL?"on":""} ${isT?"td":""}" title="${isL?"Lesson day":""}">${d.toLocaleDateString("en-GB",{weekday:"short"}).slice(0,2)}<b>${d.getDate()}</b></span>`}).join("");
+ el.innerHTML=`<div><div class="eb">${h<12?"Good morning":h<18?"Good afternoon":"Good evening"}</div><h1>${esc(first)}</h1>
+  ${cur?`<h2>Lesson ${esc(cur.n)} · ${esc(cur.t)}</h2><p>${esc(cur.d)}</p>`:"<p>Your first lesson will appear here.</p>"}
+  ${next?`<div class="ns"><div><small>Your next step${next.due?" · due "+fdate(next.due):""}</small><b>${esc(next.title)}</b></div><a class="btn" href="${esc(next.url)}">Start</a></div>`:""}
+  ${cur?`<div class="bs">${cur.pages.slice(0,next?3:4).map((p,j)=>`<a class="btn ${next||j?"l":""}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}<a class="btn l" href="#course">All pages</a></div>`:""}
+  ${days||nx||CAB.schedule?`<div class="wk7" aria-label="This week">${days?wk:""}${nx?`<em>Next lesson: <b style="color:var(--ink)">${nx.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})} · ${hm(nx)}</b> · ${rel(nx)}</em>`:CAB.schedule?`<em>Lessons: <b style="color:var(--ink)">${esc(CAB.schedule)}</b></em>`:""}</div>`:""}
+  ${CAB.note?`<div class="note">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:""}</div>
+  <div class="gf"><div class="frame">${ILLU}</div>
+   ${CAB.lessons_left!=null&&(CAB.payment||"private")==="private"?`<div class="fb t"><b>${CAB.lessons_left}</b>lessons left</div>`:""}
+   ${last?`<div class="fb b">Speaking pace<b>${last.wpm} wpm${pts.length>1?` <span style="font-size:12px;color:var(--ok)">+${last.wpm-pts[0]}</span>`:""}</b>${line?`<svg viewBox="0 0 120 28" aria-hidden="true"><polyline points="${line}" fill="none" style="stroke:var(--lil)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`:""}</div>`:""}</div>`; }
+const _rG=render; render=function(){ _rG(); glassHero(); };
+if(D.demo){ CAB=D.demo.CAB; SENT=D.demo.SENT; PROG=D.demo.PROG; ASG=D.demo.ASG; LOG=D.demo.LOG||[]; applyScores(D.demo.SC);
+ const n=document.createElement("div"); n.className="warn on"; n.textContent="Design preview with sample data — not a real student, nothing is saved."; $("top").prepend(n); }
+else loadCache(); render();
 window.addEventListener("scroll",syncNav,{passive:true}); syncNav();
 setInterval(greet,60000);
 
-if(D.student.code){
+if(D.student.code&&!D.demo){
  Promise.all([ rpc("get_my_cabinet",{p_code:D.student.code}), rpc("get_my_progress",{p_code:D.student.code}) ])
  .then(([c,p])=>{
   CAB=(c&&c[0])||{}; PROG={}; HWD={}; SENT={};
@@ -554,6 +688,7 @@ if(D.student.code){
   w.textContent="⚠️ Couldn't reach the server just now, so this page shows what was saved on this device. Your answers are safe — reload in a minute.";
   if($("hwl").textContent.trim()==="Loading…") $("hwl").innerHTML='<p class="empty">Assignments will appear when the connection is back.</p>'; });
  // grades are separate: if the scores table is not set up yet, the rest of the page still works
+ rpc("get_my_lessons",{p_code:D.student.code}).then(r=>{ LOG=Array.isArray(r)?r:[]; saveCache(); render(); }).catch(()=>{});
  rpc("get_my_assignments",{p_code:D.student.code}).then(r=>{ ASG=Array.isArray(r)?r:[]; saveCache(); render(); }).catch(()=>{});
  rpc("get_my_scores",{p_code:D.student.code}).then(r=>{ if(teacher&&dirty)return; applyScores(r); saveCache(); renderProgress(); renderEditors(); }).catch(()=>{});
 }
