@@ -18,7 +18,7 @@ main{padding:4px 0 30px}.sec{display:none}.sec.on{display:block}body.tv nav,body
 .row{padding:7px 0;border-bottom:1px solid #f0f0f2}.row .w{display:inline-block;min-width:44px;font-weight:600;color:#c4642a}
 input.g,select.g{max-width:100%;font:inherit;font-size:16px;border:1.5px solid #c8c9cb;border-radius:4px;padding:4px 6px;background:#fff}textarea.g{width:100%;min-height:90px;font:inherit;font-size:16px;border:1.5px solid #c8c9cb;border-radius:6px;padding:8px 10px}
 .right{border-color:#3a9d5d!important;background:#eaf7ee!important}.wrong{border-color:#d9534f!important;background:#fdecec!important}
-.fb{display:none;font-size:14.5px;margin-top:3px}.fb.show{display:block}.fb.ok{color:#2e7d4f}.fb.no{color:#b03a2e}
+.fb{display:none;font-size:14.5px;margin-top:3px}.fb.show{display:block}span.fb.show{display:inline;margin:0 6px 0 4px}.fb.ok{color:#2e7d4f}.fb.no{color:#b03a2e}
 .ctl{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}.btn{background:#4d4d4f;color:#fff;border:0;border-radius:4px;padding:8px 18px;font:500 15px "Fira Sans",system-ui,sans-serif;cursor:pointer}.btn.l{background:#fff;color:#4d4d4f;border:1.5px solid #c8c9cb}.res{font-weight:500;color:#c4642a}
 .model{display:none;background:#f6f6f7;border-left:4px solid #8a8b8d;padding:8px 14px;margin-top:8px;font-size:15.5px;white-space:pre-wrap}.model.show{display:block}
 .art{background:#f9e3d3;padding:16px 22px;border-radius:4px;columns:2;column-gap:30px;font-size:16px}.art h3{column-span:all;font-family:Georgia,serif;font-size:28px;margin:0}.art .sub2{column-span:all;font-weight:600;font-size:14px;margin:0 0 10px}.art p{margin:0 0 10px}.art .sh{font-weight:600;margin:12px 0 4px;break-after:avoid}.art .sh .num{margin-right:6px}
@@ -30,7 +30,7 @@ details.ad{margin:8px 0}details.ad summary{cursor:pointer;color:#c4642a;font-wei
 .board input{width:110px}.tf{display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid #f0f0f2;flex-wrap:wrap}.tf .q{flex:1;min-width:280px}
 .card{background:#eef0f2;border-left:5px solid #e8894a;padding:14px 20px;margin:8px 0;font-size:18px}
 .selfa{display:flex;margin-top:14px;border-radius:6px;overflow:hidden}.selfa .l{background:#e8894a;color:#fff;font-weight:600;padding:12px 16px}.selfa .r{flex:1;background:#f0f0f1;padding:10px 16px;font-size:15px}
-.score button{width:42px;height:42px;border-radius:50%;border:2px solid #e1e2e3;background:#fff;font-size:16px;margin:6px 6px 0 0;cursor:pointer}.score button.on{border-color:#e8894a;background:#fbeadb}
+.score button{width:44px;height:44px;border-radius:50%;border:2px solid #e1e2e3;background:#fff;font-size:16px;margin:6px 6px 0 0;cursor:pointer}.score button.on{border-color:#e8894a;background:#fbeadb}
 .done{display:none;margin-top:10px;background:#eaf7ee;color:#1e6b3d;padding:10px 14px;border-radius:6px}
 .slack{border:1px solid #ddd;border-radius:8px;padding:10px 14px;background:#fff;font-size:15.5px}.slack b{font-weight:600}.slack .t{color:#8a8b8d;font-size:13px;margin-left:6px}
 .hint{font-size:14px;color:#6d6e70}.two{display:grid;grid-template-columns:1fr 1fr;gap:6px 30px}
@@ -173,5 +173,7 @@ function goStep(b){if(!b)return;b.click();setTimeout(()=>{const s=document.query
   tg.onclick=()=>{all=!all;upd()};document.addEventListener("click",e=>{if(e.target.closest("nav button,.nextbar button"))setTimeout(upd,40)});upd()}
  document.querySelectorAll(".redo").forEach(r=>r.addEventListener("click",()=>{if(r.textContent.indexOf("↺")===0){const b=r.parentElement.querySelector("button[onclick]");const m=b&&b.getAttribute("onclick").match(/chk[A-Za-z]*\(\s*'([^']+)'/);if(m){TRY[m[1]]=0;_allOk[m[1]]=false}}}));
 })();
+(function(){document.querySelectorAll("section.sec").forEach(sec=>{let n="";sec.querySelectorAll("p.ins").forEach(p=>{const x=p.querySelector("b.x");if(x){n=x.textContent.trim();return}
+ const f=p.firstElementChild;if(n&&f&&f.tagName==="B"&&/^[A-H]$/.test(f.textContent.trim())&&p.firstChild===f){const b=document.createElement("b");b.className="x";b.textContent=n;p.insertBefore(b,f)}})})})();
 start();
 </script><script src="https://villevian.github.io/bp-admin/vocab-kit.js" defer></script></body></html>
