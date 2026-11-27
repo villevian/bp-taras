@@ -50,7 +50,8 @@ function status(t,c=""){$("st").textContent=t;$("st").className="st "+c}
 function local(){try{localStorage.setItem("voc:"+KEYL+":"+(CODE||"preview"),JSON.stringify(S))}catch(e){}}
 async function save(){if(!ready)return;local();if(!CODE){status("Preview — your words are saved on this device only.");return}
  try{try{const r=await rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL});const R=(r&&r[0]&&r[0].answers)||{};const del=new Set([...(R.del||[]),...(S.del||[])]),o={};[...(R.own||[]),...(S.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];ownSync();const m=mergeSel(R,S);S.chg=m.chg;S.sel=m.sel.filter(id=>byId[id])}catch(e){}
- const known=Object.values(S.lv).filter(v=>v>=3).length;await rpc("save_hw",{p_code:CODE,p_lesson:KEYL,p_answers:S,p_score:{selected:S.sel.length,mastered:known},p_submitted:false});status("Saved ✓","ok")}catch(e){status("Saved on this device (no internet).")}}
+ const known=Object.values(S.lv).filter(v=>v>=3).length,sl=S.sel.filter(id=>byId[id]),kn=sl.filter(id=>lv(id)>=3).length,lr=sl.filter(id=>lv(id)>0&&lv(id)<3).length;
+ await rpc("save_hw",{p_code:CODE,p_lesson:KEYL,p_answers:S,p_score:{selected:S.sel.length,mastered:known,known:kn,learning:lr,total:sl.length,at:new Date().toISOString().slice(0,10)},p_submitted:false});status("Saved ✓","ok")}catch(e){status("Saved on this device (no internet).")}}
 function later(){clearTimeout(timer);timer=setTimeout(save,1000)}
 function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 function dots(id){const n=lv(id);return '<span class="lv">'+[0,1,2].map(i=>'<i class="'+(i<n?"f":"")+'"></i>').join("")+"</span>"}

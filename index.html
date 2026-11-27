@@ -2,130 +2,543 @@
 <title>Taras · My English</title><meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--or:#ff6b3d;--or2:#fff1ea;--ink:#1f2a44;--mut:#8a92a6;--line:#e8ebf2;--bg:#f5f7fb;--ok:#23824a;--ok2:#e7f6ec;--wa:#b26b00;--wa2:#fff4e0;--bl:#3b5bdb;--bl2:#eef3ff;--bad:#c0392b}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.45}
-a{color:inherit}.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
-aside{background:#fff;border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
-.me{display:flex;align-items:center;gap:10px;padding:0 8px 18px;border-bottom:1px solid var(--line);margin-bottom:12px}
-.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ff8a5c,#ff6b3d);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex:none}
+:root{--acc:#ff6b3d;--acc2:#fff3ef;--acc3:#ffe1d8;--accd:#b24b2b;
+--ink:#1b2235;--ink2:#4d566d;--mut:#737b90;--line:#e9ecf3;--bg:#f6f8fc;--pan:#fff;
+--ok:#1d7a47;--ok2:#e8f6ed;--wa:#a86500;--wa2:#fff5e3;--bl:#3558d4;--bl2:#eef2ff;--bad:#b8372b;--bad2:#fdeceb;
+--r:16px;--r2:12px;--sh:0 1px 2px rgba(27,34,53,.04),0 6px 20px rgba(27,34,53,.05)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--acc);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:8px;top:-60px;background:#fff;padding:10px 16px;border-radius:10px;z-index:20;transition:.2s}
+.skip:focus{top:8px}
+.app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
+aside{background:var(--pan);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+.me{display:flex;align-items:center;gap:11px;padding:0 8px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.av{width:42px;height:42px;border-radius:14px;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex:none}
 .me b{display:block;font-size:15px}.me span{font-size:12.5px;color:var(--mut)}
-aside a.nv{display:flex;align-items:center;gap:10px;text-decoration:none;color:#5b6478;padding:9px 10px;border-radius:10px;font-weight:500;font-size:14.5px}
-aside a.nv:hover{background:var(--bg)}aside a.nv.on{background:var(--or2);color:var(--or)}aside a.nv i{font-style:normal;width:20px;text-align:center}
-aside .sp{flex:1}.tch{font-size:12.5px;color:var(--mut);padding:10px;border-top:1px solid var(--line)}.tch b{display:block;color:var(--ink);font-weight:600;font-size:13px}
-main{padding:28px 34px 50px;max-width:1180px;width:100%}
-.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}.top h1{margin:0;font-size:26px;font-weight:700}.top p{margin:4px 0 0;color:var(--mut)}
-.ring{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 14px}.ring svg{width:46px;height:46px}.ring b{display:block;font-size:15px}.ring span{font-size:12.5px;color:var(--mut)}
-.stats{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:14px;margin-bottom:18px}
-.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 2px 10px rgba(31,42,68,.04)}
-.card h3{margin:0 0 10px;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:600;display:flex;align-items:center;gap:6px}
-.big{font-size:20px;font-weight:700;line-height:1.25}.sub{color:#5b6478;font-size:14px;margin-top:3px}
-.num{font-size:40px;font-weight:700;line-height:1}.bar{height:8px;background:#eef0f4;border-radius:6px;overflow:hidden;margin-top:10px}.bar i{display:block;height:100%;border-radius:6px;background:var(--or)}
+.nv{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink2);padding:9px 11px;border-radius:11px;font-weight:500;font-size:14.5px;min-height:44px}
+.nv:hover{background:var(--bg)}.nv[aria-current="true"]{background:var(--acc2);color:var(--accd);font-weight:600}
+.nv i{font-style:normal;width:20px;text-align:center;flex:none}
+.nvsep{height:1px;background:var(--line);margin:9px 6px}
+aside .sp{flex:1;min-height:14px}
+.tch{font-size:12.5px;color:var(--mut);padding:11px 10px;border-top:1px solid var(--line)}
+.tch b{display:block;color:var(--ink);font-weight:600;font-size:13px}
+.tbtn{margin-top:9px;width:100%;font:inherit;font-size:12.5px;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px;min-height:44px;cursor:pointer}
+.tbtn:hover{color:var(--ink);border-color:var(--acc)}
+main{padding:26px 32px 56px;max-width:1200px;width:100%}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.top h1{margin:0;font-size:26px;font-weight:700;letter-spacing:-.4px}.top p{margin:4px 0 0;color:var(--mut)}
+.ring{display:flex;align-items:center;gap:11px;background:var(--pan);border:1px solid var(--line);border-radius:14px;padding:9px 15px}
+.ring svg{width:46px;height:46px;flex:none}.ring b{display:block;font-size:15px}.ring span{font-size:12.5px;color:var(--mut)}
+.card{background:var(--pan);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh)}
+.card h3{margin:0 0 10px;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:600;display:flex;align-items:center;gap:6px}
+.big{font-size:20px;font-weight:700;line-height:1.25}.sub{color:var(--ink2);font-size:14px;margin-top:3px}
+.num{font-size:38px;font-weight:700;line-height:1;letter-spacing:-1px}
+.bar{height:8px;background:#edf0f6;border-radius:6px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;border-radius:6px;background:var(--acc)}
+.stats{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:13px;margin-bottom:18px}
+a.card{text-decoration:none;display:block}a.card:hover{border-color:var(--acc3)}
 .pill{display:inline-block;font-size:12.5px;font-weight:600;border-radius:8px;padding:2px 9px}
-.p-ok{background:var(--ok2);color:var(--ok)}.p-wa{background:var(--wa2);color:var(--wa)}.p-no{background:#f1f2f6;color:#6b7387}.p-new{background:var(--bl2);color:var(--bl)}.p-bad{background:#fdecec;color:var(--bad)}
-.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;background:var(--or);color:#fff;text-decoration:none;border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px;border:0;cursor:pointer}
-.btn.l{background:#fff;color:var(--ink);border:1.5px solid var(--line);display:inline-flex;padding:8px 14px;grid-template-columns:none}.btn.l:hover{border-color:var(--or);color:var(--or)}
+.p-ok{background:var(--ok2);color:var(--ok)}.p-wa{background:var(--wa2);color:var(--wa)}
+.p-no{background:#f1f3f7;color:#5f677b}.p-new{background:var(--bl2);color:var(--bl)}.p-bad{background:var(--bad2);color:var(--bad)}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;text-decoration:none;border-radius:11px;padding:10px 15px;font-weight:600;font-size:14px;border:0;cursor:pointer;min-height:44px}
+.btn:hover{filter:brightness(.95)}
+.btn.l{background:var(--pan);color:var(--ink);border:1.5px solid var(--line)}
+.btn.l:hover{border-color:var(--acc);color:var(--accd);filter:none}
 .mid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;margin-bottom:26px}
-.hero .no{display:inline-block;background:var(--or2);color:var(--or);font-weight:700;border-radius:10px;padding:4px 10px;font-size:14px;margin-bottom:8px}
-.hero h2{margin:0 0 6px;font-size:24px}.hero p{margin:0 0 14px;color:#5b6478}.hero .bs{display:flex;flex-wrap:wrap;gap:8px}
-.msg{margin-top:14px;background:#fffaf0;border:1px solid #f6dfb5;border-radius:14px;padding:12px 16px;color:#5b4a2a}
-.hw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #f1f2f6}.hw:first-of-type{border-top:0}.hw a{text-decoration:none;font-weight:600}.hw small{display:block;color:var(--mut);font-weight:400}
-h2.sec{font-size:20px;margin:0 0 12px}
-.unit{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:12px;overflow:hidden}
-.uh{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer}.uh .ub{width:38px;height:38px;border-radius:12px;background:var(--bl2);color:var(--bl);font-weight:700;display:flex;align-items:center;justify-content:center}
-.uh .ut{flex:1}.uh .ut b{display:block;font-size:16px}.uh .ut span{font-size:13px;color:var(--mut)}.uh .ub2{width:140px}.uh .chev{color:var(--mut);transition:.2s}.unit.open .chev{transform:rotate(90deg)}
+.hero .no{display:inline-block;background:var(--acc2);color:var(--accd);font-weight:700;border-radius:9px;padding:4px 10px;font-size:14px;margin-bottom:8px}
+.hero h2{margin:0 0 6px;font-size:23px;letter-spacing:-.3px}.hero p{margin:0 0 14px;color:var(--ink2)}
+.hero .bs{display:flex;flex-wrap:wrap;gap:8px}
+.msg{margin-top:14px;background:#fffaf0;border:1px solid #f6dfb5;border-radius:var(--r);padding:13px 16px;color:#5b4a2a}
+.warn{margin-bottom:16px;background:var(--wa2);border:1px solid #f0d9a8;border-radius:var(--r2);padding:11px 15px;color:#6b531d;font-size:13.5px;display:none}
+.warn.on{display:block}
+.hw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid #f1f3f7}
+.hw:first-of-type{border-top:0}.hw a{text-decoration:none;font-weight:600}.hw small{display:block;color:var(--mut);font-weight:400}
+h2.sec{font-size:20px;margin:0 0 12px;letter-spacing:-.3px;scroll-margin-top:12px}
+.unit{background:var(--pan);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.uh{display:flex;align-items:center;gap:14px;padding:14px 18px;width:100%;background:none;border:0;font:inherit;color:inherit;text-align:left;cursor:pointer;min-height:48px}
+.uh:hover{background:var(--bg)}
+.uh .ub{width:38px;height:38px;border-radius:12px;background:var(--bl2);color:var(--bl);font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.uh .ut{flex:1;min-width:0}.uh .ut b{display:block;font-size:16px}.uh .ut span{font-size:13px;color:var(--mut)}
+.uh .ub2{width:140px;flex:none}.uh .chev{color:var(--mut);transition:.2s;flex:none}
+.unit.open .chev{transform:rotate(90deg)}
 .ls{display:none;border-top:1px solid var(--line)}.unit.open .ls{display:block}
-.l{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:12px 18px;border-top:1px solid #f3f4f8}.l:first-child{border-top:0}
-.l .ln{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#5b6478}
-.l.done .ln{background:var(--ok2);border-color:var(--ok2);color:var(--ok)}.l.cur .ln{border-color:var(--or);color:var(--or)}
-.l b{font-weight:600}.l p{margin:2px 0 6px;font-size:13.5px;color:var(--mut)}.l .pg{display:flex;flex-wrap:wrap;gap:6px}.l .pg a{font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--line);border-radius:9px;padding:3px 10px;color:var(--ink)}.l .pg a:hover{border-color:var(--or);color:var(--or)}
+.l{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 18px;border-top:1px solid #f3f5f9}
+.l:first-child{border-top:0}
+.l .ln{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:var(--ink2)}
+.l.done .ln{background:var(--ok2);border-color:var(--ok2);color:var(--ok)}
+.l.cur .ln{border-color:var(--acc);color:var(--accd)}
+.l b{font-weight:600}.l p{margin:2px 0 6px;font-size:13.5px;color:var(--mut)}
+.l .pg{display:flex;flex-wrap:wrap;gap:6px}
+.l .pg a{font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--line);border-radius:9px;padding:5px 11px;color:var(--ink);min-height:36px;display:inline-flex;align-items:center}
+.l .pg a:hover{border-color:var(--acc);color:var(--accd)}
 .l.lock{opacity:.55}.l.lock .ln{border-style:dashed}
 .empty{color:var(--mut);font-size:14px}
 .pl{margin-bottom:26px}.pl .wk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:6px}
-.pl .dy{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff}.pl .dy.td{border-color:var(--or);background:var(--or2)}
-.pl .dy small{display:block;color:var(--mut);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}.pl .dy b{display:block;font-size:14.5px;margin-top:2px}.pl .dy span{font-size:13px;color:#5b6478}
-.rt{display:flex;gap:6px;margin-top:12px}.rt div{flex:1;border-radius:10px;padding:8px 10px;background:#f1f2f6;font-size:13px;color:#5b6478}.rt div b{display:block;color:var(--ink);font-size:14px}.rt div.now{background:var(--bl2);color:var(--bl)}.rt div.now b{color:var(--bl)}
+.pl .dy{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--pan)}
+.pl .dy.td{border-color:var(--acc);background:var(--acc2)}
+.pl .dy small{display:block;color:var(--mut);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.pl .dy b{display:block;font-size:14.5px;margin-top:2px}.pl .dy span{font-size:13px;color:var(--ink2)}
+.rt{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+.rt div{flex:1;min-width:150px;border-radius:11px;padding:9px 11px;background:#f1f3f7;font-size:13px;color:var(--ink2)}
+.rt div b{display:block;color:var(--ink);font-size:14px}.rt div.now{background:var(--bl2);color:var(--bl)}.rt div.now b{color:var(--bl)}
 .pl .row3{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
-@media(max-width:760px){.pl .wk{grid-template-columns:repeat(2,minmax(0,1fr))}.pl .row3{grid-template-columns:1fr}}
+.pg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:14px}
+.pg2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;margin-bottom:14px}
+.sk .lab{font-size:12.5px;color:var(--ink2);font-weight:600}
+.sk .v{font-size:27px;font-weight:700;letter-spacing:-.8px;margin:5px 0 2px}
+.sk .v small{font-size:13px;color:var(--mut);font-weight:600}
+.src{font-size:11.5px;color:var(--mut);margin-top:7px}
+.mr{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px;margin-top:11px}
+.mr .n{color:var(--ink2)}.mr .vv{font-weight:600}
+.bd{display:flex;gap:4px}.bd span{width:13px;height:13px;border-radius:50%;background:#e7eaf2}.bd span.on{background:var(--acc)}
+.br{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #f1f3f7}
+.br:first-of-type{border-top:0}.br .t1{font-size:13.5px;font-weight:600}.br .t2{font-size:12px;color:var(--mut);margin-top:2px}
+.q{background:var(--acc2);border-radius:var(--r2);padding:11px 14px;font-size:13px;margin-top:12px;color:var(--ink)}
+.tb{display:none;align-items:center;gap:12px;flex-wrap:wrap;background:var(--ink);color:#fff;border-radius:var(--r2);padding:11px 16px;margin-bottom:18px;font-size:13.5px}
+.tb.on{display:flex}.tb .sp2{flex:1}
+.tb button{background:rgba(255,255,255,.17);color:#fff;border:0;min-height:40px;padding:8px 14px;border-radius:9px;font:inherit;font-size:13px;cursor:pointer}
+.tb button:hover{background:rgba(255,255,255,.3)}.tb button:disabled{opacity:.5;cursor:default}
+table.g{width:100%;border-collapse:collapse;font-size:13px}
+table.g th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--mut);font-weight:600;padding-bottom:8px}
+table.g td{padding:5px 5px 5px 0;border-top:1px solid #f1f3f7;vertical-align:middle}
+input,select,textarea{font:inherit;font-size:13px;color:var(--ink);background:var(--pan);border:1.5px solid var(--line);border-radius:9px;padding:7px 9px;min-height:40px;width:100%}
+input:focus,select:focus{border-color:var(--acc)}input.bad{border-color:var(--bad);background:var(--bad2)}
+.del{background:none;border:0;color:var(--mut);font-size:19px;line-height:1;padding:7px 9px;border-radius:8px;cursor:pointer;min-height:40px;min-width:40px}
+.del:hover{color:var(--bad);background:var(--bad2)}
+.err{color:var(--bad);font-size:12.5px;margin-top:7px;display:none}.err.on{display:block}
+.note{font-size:12px;color:var(--mut);line-height:1.7;margin-top:11px}.note b{color:var(--ink2);font-weight:600}
+.ov{position:fixed;inset:0;background:rgba(27,34,53,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:60}
+.ov.on{display:flex}
+.modal{background:#fff;border-radius:20px;padding:26px 24px;max-width:380px;width:100%}
+.modal h3{margin:0 0 5px;font-size:17px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.modal p{margin:0 0 15px;font-size:13px;color:var(--mut)}
+.modal .bs2{display:flex;gap:8px;margin-top:14px}.modal .bs2 .btn{flex:1;justify-content:center}
 footer{color:var(--mut);font-size:12.5px;margin-top:30px}
-@media(max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.mid{grid-template-columns:1fr}}
-@media(max-width:760px){.app{grid-template-columns:minmax(0,1fr)}aside{position:sticky;top:0;z-index:5;height:auto;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:10px 12px;gap:2px}aside a.nv{white-space:nowrap;padding:8px}.ring{display:none}.hero .bs .btn{white-space:normal}.me{border:0;padding:0 8px 0 0;margin:0}aside .sp,.tch{display:none}main{padding:18px 16px 40px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.uh .ub2{display:none}.l{grid-template-columns:40px 1fr}.l>.st{grid-column:2}}
-</style></head><body><div class="app">
-<aside><div class="me"><div class="av" id="av"></div><div><b id="nm"></b><span>Student</span></div></div>
-<a class="nv on" href="#top"><i>🏠</i>Dashboard</a><a class="nv" href="#myplan"><i>📆</i>My plan</a><a class="nv" href="#course"><i>📘</i>My course</a><a class="nv" href="#homework"><i>📝</i>Homework</a><span id="xl"></span>
-<div class="sp"></div><div class="tch">Your teacher<b>Valentyna Hordiienko</b>Middle Learning Architect</div></aside>
-<main id="top"><div class="top"><div><h1 id="hi"></h1><p id="today"></p></div><div class="ring" id="ring"></div></div>
-<div class="stats" id="stats"></div>
-<div class="mid"><div><div class="card hero" id="hero"></div><div id="msg"></div></div><div class="card" id="homework"><h3>📝 Homework</h3><div id="hwl"><p class="empty">Loading…</p></div></div></div>
-<div id="plan"></div><h2 class="sec" id="course">My course</h2><div id="units"></div>
-<footer>Valentyna Hordiienko · Middle Learning Architect</footer></main></div>
+@media(max-width:1060px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.mid,.pg2,.pl .row3{grid-template-columns:minmax(0,1fr)}.hero .btn{white-space:normal;text-align:left}.pg4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ .app{grid-template-columns:minmax(0,1fr)}
+ aside{position:sticky;top:0;z-index:5;height:auto;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:8px 12px;gap:2px;border-right:0;border-bottom:1px solid var(--line)}
+ .nv{white-space:nowrap;padding:8px 10px}.ring{display:none}
+ .me{border:0;padding:0 8px 0 0;margin:0}aside .sp,.tch,.nvsep{display:none}
+ main{padding:18px 15px 44px}.pl .wk{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .uh .ub2{display:none}.l{grid-template-columns:40px minmax(0,1fr)}.l>.st{grid-column:2}
+ .pg4,.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{padding:14px 14px}.num{font-size:32px}
+ .hero .bs{display:grid;grid-template-columns:1fr 1fr}.hero .btn{justify-content:center;text-align:center}
+ h2.sec{scroll-margin-top:70px}
+ .tfoot{display:block!important}
+}
+.tfoot{display:none;text-align:center;margin-top:18px}.tfoot button{background:none;border:0;color:var(--mut);font:inherit;font-size:12.5px;text-decoration:underline;min-height:44px;cursor:pointer}
+</style></head><body>
+<a class="skip" href="#top">Skip to content</a>
+<div class="app">
+
+<aside>
+ <div class="me"><div class="av" id="av" aria-hidden="true"></div><div><b id="nm"></b><span>Student</span></div></div>
+ <nav aria-label="Sections" style="display:contents">
+  <a class="nv" aria-current="true" href="#top"><i aria-hidden="true">🏠</i>Dashboard</a>
+  <a class="nv" href="#myplan"><i aria-hidden="true">📆</i>My plan</a>
+  <a class="nv" href="#progress"><i aria-hidden="true">📊</i>My progress</a>
+  <a class="nv" href="#course"><i aria-hidden="true">📘</i>My course</a>
+  <a class="nv" href="#homework"><i aria-hidden="true">📝</i>Homework</a>
+  <span id="xl" style="display:contents"></span>
+ </nav>
+ <div class="sp"></div>
+ <div class="tch">Your teacher<b>Valentyna Hordiienko</b>Middle Learning Architect
+  <button class="tbtn" id="bTeacher" type="button">Teacher mode</button></div>
+</aside>
+
+<main id="top" tabindex="-1">
+ <div class="tb" id="tb" role="region" aria-label="Teacher mode"><b style="font-weight:600">Teacher mode</b><span id="tinfo" aria-live="polite"></span>
+  <span class="sp2"></span><button id="bSave" type="button">Save grades</button><button id="bExit" type="button">Exit</button></div>
+
+ <div class="top"><div><h1 id="hi"></h1><p id="today"></p></div><div class="ring" id="ring"></div></div>
+
+ <div class="warn" id="offline" role="status"></div>
+ <div class="stats" id="stats"></div>
+
+ <div class="mid">
+  <div><div class="card hero" id="hero"></div><div id="msg"></div></div>
+  <div class="card" id="homework"><h3>📝 Homework</h3><div id="hwl"><p class="empty">Loading…</p></div></div>
+ </div>
+
+ <div id="plan"></div>
+
+ <h2 class="sec" id="progress">📊 My progress</h2>
+ <div class="card" id="gradeCard" style="display:none;margin-bottom:14px"></div>
+ <div class="card" id="speechEdit" style="display:none;margin-bottom:14px"></div>
+ <div class="pg4" id="skills"></div>
+ <div class="pg2"><div class="card" id="speakCard"></div><div class="card" id="vocabCard"></div></div>
+ <div class="card" id="gramCard" style="margin-bottom:26px"></div>
+
+ <h2 class="sec" id="course">📘 My course</h2>
+ <div id="units"></div>
+
+ <div class="tfoot"><button type="button" id="bTeacher2">Teacher mode</button></div>
+ <footer>Valentyna Hordiienko · Middle Learning Architect</footer>
+</main>
+</div>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ovT"><div class="modal">
+ <h3 id="ovT">Teacher access</h3><p>Enter your teacher key to grade this student's work.</p>
+ <input type="password" id="pw" placeholder="Teacher key" autocomplete="off" aria-label="Teacher key">
+ <div class="err" id="pwErr" role="alert"></div>
+ <div class="bs2"><button class="btn l" id="bCancel" type="button">Cancel</button><button class="btn" id="bOk" type="button">Unlock</button></div>
+</div></div>
+
 <script>
-const D={"units": [{"u": "1", "t": "Career choices", "ls": [{"n": "1.1", "t": "Transferable skills", "d": "Skills that survive AI · Vocabulary: transferable skills · Project: a job description for a remote tech role", "open": true, "tr": "all", "pages": ["flip", "lesson", "speak", "hw", "words", "clean", "extra"], "classic": false}, {"n": "1.2", "t": "Career advice and career switching", "d": "Advice and suggestions · Improving a LinkedIn profile · Switching to tech", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.3", "t": "Building rapport", "d": "Questions to build rapport on video calls and at events", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.4", "t": "Networking", "d": "Networking at meetups, online events and on LinkedIn", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.5", "t": "Writing: Introducing yourself", "d": "LinkedIn / Slack intro message · Adverbs of degree", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W1", "t": "Workshop: Remote hiring", "d": "Online job interviews · Discuss candidates", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "2", "t": "Business sectors", "ls": [{"n": "2.1", "t": "Growing sectors: tech, AI, green energy", "d": "Vocabulary: sectors and industries · Research a sector", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.2", "t": "The energy industry", "d": "Past Simple & Continuous · A short story", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.3", "t": "Dealing with interruptions", "d": "Interrupting politely in video meetings", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.4", "t": "Voice messages", "d": "Voicemail → voice notes and short async videos (Loom, Telegram)", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.5", "t": "Writing: Action points", "d": "Meeting notes and action items in Slack / Notion / Jira · will & going to", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W2", "t": "Workshop: Investing your money", "d": "Investor’s checklist · Choose a company to invest in", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "3", "t": "Projects", "ls": [{"n": "3.1", "t": "Project management", "d": "Managing projects: Agile, sprints, Jira · Word building", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.2", "t": "Large-scale projects", "d": "Comparatives & superlatives · Choosing the winning bid", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.3", "t": "Giving instructions", "d": "Giving and responding to instructions, standing your ground", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.4", "t": "Updates and action", "d": "Stand-ups and status updates · Jira board", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.5", "t": "Writing: Requesting an update", "d": "Slack message / Jira comment requesting an update · (not) enough", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W3", "t": "Workshop: Prioritising a launch", "d": "Understand priorities · Hold a project meeting", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "4", "t": "Global markets", "ls": [{"n": "4.1", "t": "One size fits all?", "d": "Global markets vocabulary · Adapt a product to a new market", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.2", "t": "Back to the office?", "d": "Present Simple & Past Simple passive · Remote vs office work: Zoom, Slack, Notion, Jira · Extra: have something done", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.3", "t": "Managing conversations", "d": "Changing the subject and staying on track · Video: Beata & Mateo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.4", "t": "Building consensus", "d": "Reaching agreement in meetings and async threads", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.5", "t": "Writing: Confirming an order", "d": "Order confirmation in chat / CRM · Verbs + prepositions", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W4", "t": "Workshop: Going global online", "d": "Sell abroad via Etsy / Shopify · Choose a strategy", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "5", "t": "Design and innovation", "ls": [{"n": "5.1", "t": "AI-powered products", "d": "Technological innovation · Describing innovative products", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.2", "t": "Product testing", "d": "Present Perfect with just, already, yet · Beta and user testing", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.3", "t": "Managing information", "d": "Asking open and closed questions · Feedback on presentations", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.4", "t": "Selling a product", "d": "Features and benefits · A product demo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.5", "t": "Writing: A product review", "d": "App Store / G2 review · Order of adjectives", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W5", "t": "Workshop: Smart wearables", "d": "Market research · Choose a product to develop", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "6", "t": "Safety and security", "ls": [{"n": "6.1", "t": "Wellbeing at work", "d": "Health and safety · Burnout, stress and work-life balance", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.2", "t": "Cybersecurity at work", "d": "Modals of obligation · Phishing, passwords, 2FA", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.3", "t": "Dealing with disagreement", "d": "Explaining rules and requirements", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.4", "t": "Dealing with conflict", "d": "Resolving a conflict in a team", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.5", "t": "Writing: Guidelines and warnings", "d": "Security guidelines for remote staff in Notion · Linking words for time", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W6", "t": "Workshop: Onboarding safely", "d": "Risk assessment · A security report for new employees", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "7", "t": "Customer service", "ls": [{"n": "7.1", "t": "Customer service in apps", "d": "Customer service vocabulary · Design a premium service", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.2", "t": "Chatbots vs humans", "d": "Verb + to-infinitive or -ing · AI in customer support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.3", "t": "Responding to customer concerns", "d": "Customer complaints in chat support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.4", "t": "Generating and presenting ideas", "d": "Discussing and presenting ideas", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.5", "t": "Writing: A ‘thank you’ message", "d": "Thank-you message to a client in chat or LinkedIn · some, any, all, most, no, none", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W7", "t": "Workshop: Bad reviews online", "d": "Dealing with angry customers · Turn failure into success", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "8", "t": "Communication", "ls": [{"n": "8.1", "t": "Face to face or online?", "d": "Digital communication · Communication survey", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.2", "t": "Too many notifications", "d": "First & second conditional · Async communication and focus", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.3", "t": "Closing a deal", "d": "Trying to close a deal", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.4", "t": "Talking about priorities", "d": "Prioritising tasks and the backlog", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.5", "t": "Writing: A short report", "d": "Short summary in Notion, drafted with AI · Past Perfect Simple", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W8", "t": "Workshop: Communication in a distributed team", "d": "Communication problems · Recommend improvements", "open": false, "tr": null, "pages": [], "classic": false}]}], "student": {"name": "Taras", "code": "700fd454c53e57244dd017cc008b8654"}, "links": [["vocab.html", "📚", "My vocabulary"], ["glossary.html", "📖", "Glossary"], ["https://villevian.github.io/bp-a2plus/grammar/", "📐", "Grammar"]], "plan": {"start": "2026-11-26", "days": [1, 2, 3, 4], "rhythm": "Mon–Thu, one lesson a day", "level": "Stage 1", "goal": "2027-12-31", "goal_text": "Confident English for an international team", "route": [["Stage 1", "2026-11-25", "2027-03-15"], ["Stage 2", "2027-03-16", "2027-07-31"], ["Stage 3", "2027-09-01", "2027-12-31"]]}, "build": "202611271101"};const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
-const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const rpc=(f,b)=>fetch(SB+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SK,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(r=>r.ok?r.json():Promise.reject(r.status));
+const D={"units": [{"u": "1", "t": "Career choices", "ls": [{"n": "1.1", "t": "Transferable skills", "d": "Skills that survive AI · Vocabulary: transferable skills · Project: a job description for a remote tech role", "open": true, "tr": "all", "pages": ["flip", "lesson", "speak", "hw", "words", "clean", "extra"], "classic": false}, {"n": "1.2", "t": "Career advice and career switching", "d": "Advice and suggestions · Improving a LinkedIn profile · Switching to tech", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.3", "t": "Building rapport", "d": "Questions to build rapport on video calls and at events", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.4", "t": "Networking", "d": "Networking at meetups, online events and on LinkedIn", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "1.5", "t": "Writing: Introducing yourself", "d": "LinkedIn / Slack intro message · Adverbs of degree", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W1", "t": "Workshop: Remote hiring", "d": "Online job interviews · Discuss candidates", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "2", "t": "Business sectors", "ls": [{"n": "2.1", "t": "Growing sectors: tech, AI, green energy", "d": "Vocabulary: sectors and industries · Research a sector", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.2", "t": "The energy industry", "d": "Past Simple & Continuous · A short story", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.3", "t": "Dealing with interruptions", "d": "Interrupting politely in video meetings", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.4", "t": "Voice messages", "d": "Voicemail → voice notes and short async videos (Loom, Telegram)", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "2.5", "t": "Writing: Action points", "d": "Meeting notes and action items in Slack / Notion / Jira · will & going to", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W2", "t": "Workshop: Investing your money", "d": "Investor’s checklist · Choose a company to invest in", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "3", "t": "Projects", "ls": [{"n": "3.1", "t": "Project management", "d": "Managing projects: Agile, sprints, Jira · Word building", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.2", "t": "Large-scale projects", "d": "Comparatives & superlatives · Choosing the winning bid", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.3", "t": "Giving instructions", "d": "Giving and responding to instructions, standing your ground", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.4", "t": "Updates and action", "d": "Stand-ups and status updates · Jira board", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "3.5", "t": "Writing: Requesting an update", "d": "Slack message / Jira comment requesting an update · (not) enough", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W3", "t": "Workshop: Prioritising a launch", "d": "Understand priorities · Hold a project meeting", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "4", "t": "Global markets", "ls": [{"n": "4.1", "t": "One size fits all?", "d": "Global markets vocabulary · Adapt a product to a new market", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.2", "t": "Back to the office?", "d": "Present Simple & Past Simple passive · Remote vs office work: Zoom, Slack, Notion, Jira · Extra: have something done", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.3", "t": "Managing conversations", "d": "Changing the subject and staying on track · Video: Beata & Mateo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.4", "t": "Building consensus", "d": "Reaching agreement in meetings and async threads", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "4.5", "t": "Writing: Confirming an order", "d": "Order confirmation in chat / CRM · Verbs + prepositions", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W4", "t": "Workshop: Going global online", "d": "Sell abroad via Etsy / Shopify · Choose a strategy", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "5", "t": "Design and innovation", "ls": [{"n": "5.1", "t": "AI-powered products", "d": "Technological innovation · Describing innovative products", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.2", "t": "Product testing", "d": "Present Perfect with just, already, yet · Beta and user testing", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.3", "t": "Managing information", "d": "Asking open and closed questions · Feedback on presentations", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.4", "t": "Selling a product", "d": "Features and benefits · A product demo", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "5.5", "t": "Writing: A product review", "d": "App Store / G2 review · Order of adjectives", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W5", "t": "Workshop: Smart wearables", "d": "Market research · Choose a product to develop", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "6", "t": "Safety and security", "ls": [{"n": "6.1", "t": "Wellbeing at work", "d": "Health and safety · Burnout, stress and work-life balance", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.2", "t": "Cybersecurity at work", "d": "Modals of obligation · Phishing, passwords, 2FA", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.3", "t": "Dealing with disagreement", "d": "Explaining rules and requirements", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.4", "t": "Dealing with conflict", "d": "Resolving a conflict in a team", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "6.5", "t": "Writing: Guidelines and warnings", "d": "Security guidelines for remote staff in Notion · Linking words for time", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W6", "t": "Workshop: Onboarding safely", "d": "Risk assessment · A security report for new employees", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "7", "t": "Customer service", "ls": [{"n": "7.1", "t": "Customer service in apps", "d": "Customer service vocabulary · Design a premium service", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.2", "t": "Chatbots vs humans", "d": "Verb + to-infinitive or -ing · AI in customer support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.3", "t": "Responding to customer concerns", "d": "Customer complaints in chat support", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.4", "t": "Generating and presenting ideas", "d": "Discussing and presenting ideas", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "7.5", "t": "Writing: A ‘thank you’ message", "d": "Thank-you message to a client in chat or LinkedIn · some, any, all, most, no, none", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W7", "t": "Workshop: Bad reviews online", "d": "Dealing with angry customers · Turn failure into success", "open": false, "tr": null, "pages": [], "classic": false}]}, {"u": "8", "t": "Communication", "ls": [{"n": "8.1", "t": "Face to face or online?", "d": "Digital communication · Communication survey", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.2", "t": "Too many notifications", "d": "First & second conditional · Async communication and focus", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.3", "t": "Closing a deal", "d": "Trying to close a deal", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.4", "t": "Talking about priorities", "d": "Prioritising tasks and the backlog", "open": false, "tr": null, "pages": [], "classic": false}, {"n": "8.5", "t": "Writing: A short report", "d": "Short summary in Notion, drafted with AI · Past Perfect Simple", "open": false, "tr": null, "pages": [], "classic": true}, {"n": "W8", "t": "Workshop: Communication in a distributed team", "d": "Communication problems · Recommend improvements", "open": false, "tr": null, "pages": [], "classic": false}]}], "student": {"name": "Taras", "code": "700fd454c53e57244dd017cc008b8654"}, "links": [["vocab.html", "📚", "My vocabulary"], ["glossary.html", "📖", "Glossary"], ["https://villevian.github.io/bp-a2plus/grammar/", "📐", "Grammar"]], "plan": {"start": "2026-11-26", "days": [1, 2, 3, 4], "rhythm": "Mon–Thu, one lesson a day", "level": "Stage 1", "goal": "2027-12-31", "goal_text": "Confident English for an international team", "route": [["Stage 1", "2026-11-25", "2027-03-15"], ["Stage 2", "2027-03-16", "2027-07-31"], ["Stage 3", "2027-09-01", "2027-12-31"]]}, "progress": {"skillsShown": [["listening", "Listening"], ["speaking", "Speaking"], ["vocabulary", "Vocabulary"], ["grammar", "Grammar"]], "rubric": [["fluency", "Fluency", ["Very hesitant", "Frequent long pauses", "Keeps going with effort", "Mostly smooth", "Natural flow"]], ["accuracy", "Accuracy", ["Errors block meaning", "Frequent basic errors", "Controls simple forms", "Good control, some slips", "Consistently accurate"]], ["range", "Range of language", ["Very basic words", "Limited, repeats a lot", "Enough for familiar topics", "Varied, some idiom", "Wide and precise"]], ["pron", "Pronunciation", ["Hard to follow", "Needs effort to follow", "Clear overall", "Easy to follow", "Clear with natural stress"]]], "green": [120, 150], "tasks": [], "speech": [], "vocabStats": null}, "build": "202611271801"};
+const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
+const ALPHA=.4, STALE=28;
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const rpc=(f,b)=>fetch(SB+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SK,"Content-Type":"application/json"},body:JSON.stringify(b)})
+ .then(async r=>{const t=await r.text();if(!r.ok){let m=t;try{m=JSON.parse(t).message||t}catch(e){}throw new Error(m||("HTTP "+r.status))}return t?JSON.parse(t):null});
 const NM={flip:"Before class",lesson:"Lesson",hw:"Homework",words:"Homework: video words",clean:"Homework: clean your English",extra:"Extra practice",games:"Speaking & games",present:"Presentation kit",speak:"Speaking practice",drill:"Vocabulary drill",review:"Grammar review"};
 const path=(n,tr,p)=>`lessons/${n.replace(".","-").toLowerCase()}/${tr}/${p}.html?v=${D.build}`;
-const first=D.student.name.split(" ")[0];$("av").textContent=first[0];$("nm").textContent=D.student.name;
-const h=new Date().getHours();$("hi").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+", "+first+"! 👋";
-$("today").textContent=new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
-$("xl").innerHTML=D.links.map(([u,i,t])=>`<a class="nv" href="${u}"><i>${i}</i>${t}</a>`).join("");
-const OPEN=[];D.units.forEach(u=>u.ls.forEach(l=>{if(l.open)OPEN.push(l)}));
-let PROG={},HWD={},CAB={};
-function status(n){return PROG[n]||"new"}
-function pageLinks(l,cls){const out=[];l.pages.forEach(p=>{out.push(`<a class="${cls||""}" href="${path(l.n,l.tr,p)}">${NM[p]||p}</a>`);if(l.classic&&p==="lesson")out.push(`<a class="${cls||""}" href="${path(l.n,l.tr+"-classic",p)}">Lesson · email version</a>`)});return out.join("")}
-function pill(s){return s==="done"?'<span class="pill p-ok">✓ Done</span>':s==="progress"?'<span class="pill p-wa">In progress</span>':'<span class="pill p-new">New</span>'}
-function render(){
- const cur=OPEN.find(l=>CAB.current_lesson&&CAB.current_lesson.startsWith(l.n))||OPEN[OPEN.length-1];
- const done=OPEN.filter(l=>status(l.n)==="done").length,pct=OPEN.length?Math.round(done/OPEN.length*100):0;
- $("ring").innerHTML=`<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#eef0f4" stroke-width="4"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#ff6b3d" stroke-width="4" stroke-linecap="round" stroke-dasharray="${pct*0.974} 100" transform="rotate(-90 18 18)"/></svg><div><b>${pct}%</b><span>${done} of ${OPEN.length} lessons done</span></div>`;
- // stats
- const S=[];
- if(CAB.next_lesson){const d=new Date(CAB.next_lesson),ms=d-new Date(),days=Math.round(ms/864e5),w=ms<0?"":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":ms<864e5?"in "+Math.round(ms/36e5)+" h":days===1?"tomorrow":"in "+days+" days";
-  S.push(`<div class="card"><h3>📅 Next lesson</h3><div class="big">${d.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"short"})}</div><div class="sub">${d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})} ${w?'· <span class="pill p-new">'+w+"</span>":""}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank">Join the call</a></div>`:""}</div>`)}
- else S.push(`<div class="card"><h3>📅 Lessons</h3><div class="big">${esc(CAB.schedule||"—")}</div><div class="sub">${CAB.schedule?"your usual time":"Your teacher will set the next date"}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank">Join the call</a></div>`:""}</div>`);
- const hwOpen=OPEN.filter(l=>l.pages.includes("hw")),hwLeft=hwOpen.filter(l=>!HWD[l.n]).length;
- S.push(`<div class="card" style="cursor:pointer" onclick="location.hash='homework'"><h3>📝 Homework</h3><div class="num" style="color:${hwLeft?"#b26b00":"#23824a"}">${hwLeft}</div><div class="sub">${hwLeft?"to do":"all done — great!"}${CAB.homework_due?" · due "+new Date(CAB.homework_due+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}):""}</div></div>`);
- if((CAB.payment||"private")==="private"&&CAB.lessons_left!=null){const n=CAB.lessons_left,c=n<=0?"#c0392b":n<=2?"#e08a00":"#23824a";
-  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div></div>`)}
- S.push(`<div class="card"><h3>📈 Progress</h3><div class="num">${done}<span style="font-size:18px;color:#8a92a6"> / ${OPEN.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="sub" style="margin-top:6px">lessons completed</div></div>`);
- $("stats").innerHTML=S.join("");$("stats").style.setProperty("--n",S.length);
- // hero
- $("hero").innerHTML=cur?`<h3>▶ Continue learning</h3><span class="no">${cur.n.startsWith("W")?"Workshop":"Lesson "+esc(cur.n)}</span> ${pill(status(cur.n))}<h2>${esc(cur.t)}</h2><p>${esc(cur.d)}</p><div class="bs">${cur.pages.map((p,j)=>`<a class="btn ${j===0?"":"l"}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}${cur.classic?`<a class="btn l" href="${path(cur.n,cur.tr+"-classic","lesson")}">Lesson · email version</a>`:""}</div>`:'<p class="empty">Your first lesson will appear here.</p>';
- $("msg").innerHTML=CAB.note?`<div class="msg">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:"";
- // homework list
- let hwU=CAB.homework_url||"";if(!hwU&&CAB.homework){const m=String(CAB.homework).match(/\b(W?\d+\.\d+)\b/),L=(m&&OPEN.find(l=>l.n===m[1]))||cur;
-  if(L){const pg=/before|flip/i.test(CAB.homework)&&L.pages.includes("flip")?"flip":/clean|mistake|error/i.test(CAB.homework)&&L.pages.includes("clean")?"clean":/word/i.test(CAB.homework)&&L.pages.includes("words")?"words":/extra/i.test(CAB.homework)&&L.pages.includes("extra")?"extra":L.pages.includes("hw")&&!/before/i.test(CAB.homework)?"hw":L.pages[0];hwU=path(L.n,L.tr,pg)}}
- const hl=[];if(CAB.homework||hwU)hl.push(`<div class="hw"><div><a href="${esc(hwU||"#")}">${esc(CAB.homework||"Homework")}</a><small>${CAB.homework_due?"Due "+new Date(CAB.homework_due+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}):"from your teacher"}</small></div><a class="btn" style="margin-left:auto;margin-right:8px;padding:6px 14px" href="${esc(hwU||"#")}">Open</a>${pill(HWD[(String(hwU).match(/lessons\/([^/]+)\//)||[])[1]?.replace("-",".")]?"done":"new")}</div>`);
- OPEN.slice().reverse().forEach(l=>{if(!l.pages.includes("hw"))return;if(hwU&&hwU.includes("/"+l.n.replace(".","-")+"/")&&/\/hw\.html/.test(hwU))return;hl.push(`<div class="hw"><div><a href="${path(l.n,l.tr,"hw")}">${esc(l.n)} ${esc(l.t)}</a><small>Homework</small></div>${HWD[l.n]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`)});
- $("hwl").innerHTML=hl.length?hl.join(""):'<p class="empty">No homework yet.</p>';
- // course
- $("units").innerHTML=D.units.map(u=>{const op=u.ls.filter(l=>l.open),dn=op.filter(l=>status(l.n)==="done").length,isCur=cur&&u.ls.includes(cur);
-  return `<div class="unit${isCur?" open":""}"><div class="uh"><div class="ub">${esc(u.u)}</div><div class="ut"><b>${esc(u.t)}</b><span>${op.length?dn+" of "+op.length+" open lessons done":"Coming soon"}</span></div><div class="ub2"><div class="bar" style="margin:0"><i style="width:${op.length?dn/u.ls.length*100:0}%"></i></div></div><div class="chev">›</div></div>
-  <div class="ls">${u.ls.map(l=>{const s=status(l.n);return `<div class="l ${l.open?(s==="done"?"done":""):"lock"} ${cur&&l===cur?"cur":""}"><div class="ln">${l.open&&s==="done"?"✓":esc(l.n.startsWith("W")?"W":l.n)}</div><div><b>${esc(l.t)}</b><p>${esc(l.d)}</p>${l.open?`<div class="pg">${pageLinks(l)}</div>`:""}</div><div class="st">${l.open?pill(s):'<span class="pill p-no">🔒 Soon</span>'}</div></div>`}).join("")}</div></div>`}).join("");
- document.querySelectorAll(".uh").forEach(x=>x.onclick=()=>x.parentNode.classList.toggle("open"));
+const dnum=v=>(String(v).trim()!==""&&Number.isFinite(Number(v)))?Number(v):null;
+function dt(v){ if(!v) return null; const s=String(v); const d=new Date(/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T12:00":s); return isNaN(d)?null:d; }
+function daysAgo(v){ const d=dt(v); return d?Math.round((Date.now()-d.getTime())/864e5):null; }
+const fdate=(v,o)=>{const d=dt(v);return d?d.toLocaleDateString("en-GB",o||{day:"numeric",month:"short"}):"";};
+const isoToday=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+
+const first=D.student.name.split(" ")[0];
+$("av").textContent=first[0]; $("nm").textContent=D.student.name;
+$("xl").innerHTML='<div class="nvsep"></div>'+D.links.map(([u,i,t])=>`<a class="nv" href="${esc(u)}"><i aria-hidden="true">${i}</i>${esc(t)}</a>`).join("");
+
+// PROG: lesson status · HWD: homework sent · CAB: cabinet · SC: raw scores from get_my_scores
+let PROG={},HWD={},SENT={},CAB={},SC=null,teacher=false,TKEY="",dirty=false;
+let MANUAL=[],AUTO=[];            // MANUAL: rows the teacher grades · AUTO: checked exercises with a skill tag (read-only)
+const CACHE="home_"+D.student.code;
+const ALL=()=>MANUAL.concat(AUTO);
+
+function loadCache(){ try{const s=localStorage.getItem(CACHE); if(s){const d=JSON.parse(s); CAB=d.CAB||{}; PROG=d.PROG||{}; HWD=d.HWD||{}; SENT=d.SENT||{}; if(d.SC)applyScores(d.SC);}}catch(e){} }
+function saveCache(){ try{localStorage.setItem(CACHE,JSON.stringify({CAB,PROG,HWD,SENT,SC,at:Date.now()}));}catch(e){} }
+
+function autoTasks(rows){ const out=[];
+ (rows||[]).forEach(r=>{ const m=r.meta||{}, sc=r.score||{}, ln=(String(r.lesson).match(/(\d+\.\d+|W\d+)/)||[])[1]||"";
+  (m.checked||[]).forEach(p=>{ const sk=(m.skills||{})[p], v=String(sc[p]||"").match(/^(\d+)\s*\/\s*(\d+)$/);
+   if(!sk||!v||!Number(v[2]))return; const i=sk.indexOf(":");
+   out.push({id:"a:"+r.lesson+":"+p,date:String(r.at||"").slice(0,10),lesson:ln,name:(m.names||{})[p]||p,
+    skill:(i<0?sk:sk.slice(0,i)).trim(),topic:(i<0?"":sk.slice(i+1)).trim(),pct:Math.round(v[1]/v[2]*100),stage:m.stage==="review"?"review":"first",auto:true}); }); });
+ return out; }
+function applyScores(r){ if(!r)return; SC=r;
+ MANUAL=(r.tasks||[]).map(t=>Object.assign({},t)); D.progress.speech=(r.speech||[]).map(s=>Object.assign({},s)); AUTO=autoTasks(r.auto);
+ const v=r.vocab; D.progress.vocabStats=(v&&Number(v.total))?{known:Number(v.known)||0,learning:Number(v.learning)||0,total:Number(v.total),lastSeen:String(v.at||"").slice(0,10)}:null; }
+
+function greet(){ const h=new Date().getHours();
+  $("hi").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+", "+first+"! 👋";
+  $("today").textContent=new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"}); }
+
+const OPEN=[]; D.units.forEach(u=>u.ls.forEach(l=>{ if(l.open) OPEN.push(l); }));
+const status=n=>PROG[n]||"new";
+// which page a saved row belongs to (lesson key "BP B1 1.1 … · Before class" → flip)
+const pageOf=name=>{const x=String(name).toLowerCase();return /before class|flip/.test(x)?"flip":/video words/.test(x)?"words":/clean/.test(x)?"clean":/extra/.test(x)?"extra":/speaking|in class/.test(x)?"speak":/games/.test(x)?"games":/homework|· hw/.test(x)?"hw":"lesson"};
+const pill=s=>s==="done"?'<span class="pill p-ok">✓ Done</span>':s==="progress"?'<span class="pill p-wa">In progress</span>':'<span class="pill p-new">New</span>';
+function pageLinks(l){ const out=[]; l.pages.forEach(p=>{ out.push(`<a href="${path(l.n,l.tr,p)}">${NM[p]||p}</a>`);
+  if(l.classic&&p==="lesson") out.push(`<a href="${path(l.n,l.tr+"-classic",p)}">Lesson · email version</a>`); }); return out.join(""); }
+
+// ---- scoring: only "review" rows count; recent results weigh more (exponential smoothing); no automatic decay ----
+const ewma=v=>{let s=null;v.forEach(x=>{s=(s==null)?x:ALPHA*x+(1-ALPHA)*s});return s==null?null:Math.round(s);};
+const byDate=(a,b)=>a.date<b.date?-1:a.date>b.date?1:0;
+
+function gramTopics(){
+  const m={};
+  ALL().filter(t=>t.skill==="grammar"&&t.pct!=null).forEach(t=>{
+    const k=(t.topic||"Other").trim()||"Other"; (m[k]=m[k]||[]).push(t); });
+  return Object.keys(m).map(k=>{
+    const all=m[k].slice().sort(byDate), rev=all.filter(t=>t.stage==="review");
+    if(!rev.length) return {topic:k,value:null,status:"learning",last:all[all.length-1].date};
+    const last=rev[rev.length-1].date;
+    return {topic:k,value:ewma(rev.map(t=>t.pct)),status:daysAgo(last)>STALE?"stale":"ok",last,n:rev.length};
+  }).sort((a,b)=>a.last<b.last?1:-1);
+}
+function speakState(){
+  const R=D.progress.rubric;
+  const h=D.progress.speech.slice().sort(byDate).filter(s=>R.every(r=>s[r[0]]!=null));
+  if(!h.length) return {status:"none"};
+  const sc=h.map(s=>R.reduce((a,r)=>a+Number(s[r[0]]),0)/R.length/5*100);
+  const v=ewma(sc), p=h.length>1?ewma(sc.slice(0,-1)):null, cur=h[h.length-1];
+  return {status:daysAgo(cur.date)>STALE?"stale":"ok",value:v,n:h.length,delta:p==null?null:v-p,
+          last:cur.date,cur,prev:h.length>1?h[h.length-2]:null};
+}
+function vocabState(){ const v=D.progress.vocabStats;
+  if(!v||!v.total) return {status:"none"};
+  return {status:daysAgo(v.lastSeen)>STALE?"stale":"ok",value:Math.round(v.known/v.total*100),n:v.known,last:v.lastSeen}; }
+function skillState(k){
+  if(k==="speaking") return speakState();
+  if(k==="vocabulary") return vocabState();
+  if(k==="grammar"){ const tp=gramTopics(), sc=tp.filter(t=>t.value!=null);
+    if(!sc.length) return {status:tp.length?"learning":"none"};
+    const last=sc.map(t=>t.last).sort()[sc.length-1];
+    return {status:daysAgo(last)>STALE?"stale":"ok",value:Math.round(sc.reduce((a,t)=>a+t.value,0)/sc.length),n:sc.length,last,topics:true}; }
+  const all=ALL().filter(t=>t.skill===k&&t.pct!=null).sort(byDate);
+  const rev=all.filter(t=>t.stage==="review");
+  if(!rev.length) return {status:all.length?"learning":"none"};
+  const vals=rev.map(t=>t.pct), v=ewma(vals), p=vals.length>1?ewma(vals.slice(0,-1)):null, last=rev[rev.length-1].date;
+  return {status:daysAgo(last)>STALE?"stale":"ok",value:v,n:rev.length,delta:p==null?null:v-p,last};
 }
 
-function renderPlan(){const P=D.plan;if(!P){$("plan").innerHTML="";const a=document.querySelector('a.nv[href="#myplan"]');if(a)a.remove();return}
- const seq=[];D.units.forEach(u=>u.ls.forEach(l=>seq.push(l)));const total=seq.length,done=seq.filter(l=>status(l.n)==="done").length;
- let i=seq.findIndex(l=>status(l.n)!=="done");if(i<0)i=seq.length;
- const days=P.days||[1,2,3,4],now=new Date();let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
- if(CAB.next_lesson){const n=new Date(CAB.next_lesson);d=new Date(n.getFullYear(),n.getMonth(),n.getDate())}
- const start=P.start?new Date(P.start+"T00:00"):null;if(start&&d<start)d=start;
- const out=[];let k=i;while(out.length<4&&k<seq.length+4){if(days.includes(d.getDay())){out.push([new Date(d),seq[k]]);k++}d.setDate(d.getDate()+1)}
+function render(){
+ greet();
+ const cur=OPEN.find(l=>CAB.current_lesson&&String(CAB.current_lesson).startsWith(l.n))||OPEN[OPEN.length-1];
+ const done=OPEN.filter(l=>status(l.n)==="done").length, pct=OPEN.length?Math.round(done/OPEN.length*100):0;
+
+ $("ring").innerHTML=`<svg viewBox="0 0 36 36" role="img" aria-label="${pct} per cent of your open lessons are done"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#edf0f6" stroke-width="4"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${pct*.974} 100" transform="rotate(-90 18 18)"/></svg><div><b>${pct}%</b><span>${done} of ${OPEN.length} lessons done</span></div>`;
+
+ const S=[];
+ const nx=dt(CAB.next_lesson);
+ if(nx){ const ms=nx-new Date(),dd=Math.round(ms/864e5);
+  const w=ms<0?"":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":ms<864e5?"in "+Math.round(ms/36e5)+" h":dd===1?"tomorrow":"in "+dd+" days";
+  S.push(`<div class="card"><h3>📅 Next lesson</h3><div class="big">${nx.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"short"})}</div><div class="sub">${nx.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}${w?' · <span class="pill p-new">'+w+"</span>":""}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank" rel="noopener">Join the call</a></div>`:""}</div>`); }
+ else S.push(`<div class="card"><h3>📅 Lessons</h3><div class="big">${esc(CAB.schedule||"—")}</div><div class="sub">${CAB.schedule?"your usual time":"Your teacher will set the next date"}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank" rel="noopener">Join the call</a></div>`:""}</div>`);
+
+ const hwOpen=OPEN.filter(l=>l.pages.includes("hw")), hwLeft=hwOpen.filter(l=>!HWD[l.n]).length;
+ S.push(`<a class="card" href="#homework"><h3>📝 Homework</h3><div class="num" style="color:${hwLeft?"var(--wa)":"var(--ok)"}">${hwLeft}</div><div class="sub">${hwLeft?"to do":"all done — great!"}${CAB.homework_due?" · due "+fdate(CAB.homework_due):""}</div></a>`);
+
+ if((CAB.payment||"private")==="private"&&CAB.lessons_left!=null){ const n=CAB.lessons_left,c=n<=0?"var(--bad)":n<=2?"var(--wa)":"var(--ok)";
+  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div></div>`); }
+
+ S.push(`<div class="card"><h3>📈 Lessons done</h3><div class="num">${done}<span style="font-size:18px;color:var(--mut)"> / ${OPEN.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="sub" style="margin-top:6px">of your open lessons</div></div>`);
+ $("stats").innerHTML=S.join(""); $("stats").style.setProperty("--n",S.length);
+
+ $("hero").innerHTML=cur?`<h3>▶ Continue learning</h3><span class="no">${cur.n.startsWith("W")?"Workshop":"Lesson "+esc(cur.n)}</span> ${pill(status(cur.n))}<h2>${esc(cur.t)}</h2><p>${esc(cur.d)}</p><div class="bs">${cur.pages.map((p,j)=>`<a class="btn ${j===0?"":"l"}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}${cur.classic?`<a class="btn l" href="${path(cur.n,cur.tr+"-classic","lesson")}">Lesson · email version</a>`:""}</div>`:'<p class="empty">Your first lesson will appear here.</p>';
+ $("msg").innerHTML=CAB.note?`<div class="msg">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:"";
+
+ let hwU=CAB.homework_url||"";
+ if(!hwU&&CAB.homework){ const m=String(CAB.homework).match(/\b(W?\d+\.\d+)\b/), L=(m&&OPEN.find(l=>l.n===m[1]))||cur;
+  if(L){ const pg=/before|flip/i.test(CAB.homework)&&L.pages.includes("flip")?"flip":/clean|mistake|error/i.test(CAB.homework)&&L.pages.includes("clean")?"clean":/word/i.test(CAB.homework)&&L.pages.includes("words")?"words":/extra/i.test(CAB.homework)&&L.pages.includes("extra")?"extra":L.pages.includes("hw")&&!/before/i.test(CAB.homework)?"hw":L.pages[0];
+   hwU=path(L.n,L.tr,pg); } }
+ const hl=[];
+ if(CAB.homework||hwU){ const mm=String(hwU).match(/lessons\/([^/]+)\/[^/]+\/([a-z]+)\.html/i), key=mm?mm[1].replace(/-/g,".").toUpperCase()+"/"+mm[2]:null;
+  hl.push(`<div class="hw"><div><a href="${esc(hwU||"#")}">${esc(CAB.homework||"Homework")}</a><small>${CAB.homework_due?"Due "+fdate(CAB.homework_due,{weekday:"short",day:"numeric",month:"short"}):"from your teacher"}</small></div><a class="btn" style="margin-left:auto;margin-right:8px;padding:7px 14px" href="${esc(hwU||"#")}">Open</a>${key&&SENT[key]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`); }
+ OPEN.slice().reverse().forEach(l=>{ if(!l.pages.includes("hw"))return;
+  if(hwU&&hwU.includes("/"+l.n.replace(".","-")+"/")&&/\/hw\.html/.test(hwU))return;
+  hl.push(`<div class="hw"><div><a href="${path(l.n,l.tr,"hw")}">${esc(l.n)} ${esc(l.t)}</a><small>Homework</small></div>${HWD[l.n]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`); });
+ $("hwl").innerHTML=hl.length?hl.join(""):'<p class="empty">No homework yet.</p>';
+
+ const wasOpen=new Set([...document.querySelectorAll(".unit.open")].map(u=>u.dataset.u));
+ $("units").innerHTML=D.units.map((u,ui)=>{ const op=u.ls.filter(l=>l.open), dn=op.filter(l=>status(l.n)==="done").length, isOpen=wasOpen.size?wasOpen.has(String(ui)):(cur&&u.ls.includes(cur));
+  return `<div class="unit${isOpen?" open":""}" data-u="${ui}"><button class="uh" type="button" aria-expanded="${isOpen?"true":"false"}" aria-controls="u${ui}"><span class="ub">${esc(u.u)}</span><span class="ut"><b>${esc(u.t)}</b><span>${op.length?dn+" of "+op.length+" open lessons done":"Coming soon"}</span></span><span class="ub2"><span class="bar" style="margin:0;display:block"><i style="width:${op.length?dn/op.length*100:0}%"></i></span></span><span class="chev" aria-hidden="true">›</span></button>
+  <div class="ls" id="u${ui}">${u.ls.map(l=>{ const s=status(l.n);
+   return `<div class="l ${l.open?(s==="done"?"done":""):"lock"} ${cur&&l===cur?"cur":""}"><div class="ln" aria-hidden="true">${l.open&&s==="done"?"✓":esc(l.n.startsWith("W")?"W":l.n)}</div><div><b>${esc(l.t)}</b><p>${esc(l.d)}</p>${l.open?`<div class="pg">${pageLinks(l)}</div>`:""}</div><div class="st">${l.open?pill(s):'<span class="pill p-no">🔒 Soon</span>'}</div></div>`; }).join("")}</div></div>`; }).join("");
+ document.querySelectorAll(".uh").forEach(b=>b.addEventListener("click",()=>{
+  const u=b.parentNode, open=u.classList.toggle("open"); b.setAttribute("aria-expanded",open?"true":"false"); }));
+
+ renderPlan(); renderProgress();
+}
+
+function renderPlan(){ const P=D.plan;
+ if(!P){ $("plan").innerHTML=""; const a=document.querySelector('a.nv[href="#myplan"]'); if(a)a.remove(); return; }
+ const seq=[]; D.units.forEach(u=>u.ls.forEach(l=>seq.push(l)));
+ const total=seq.length, done=seq.filter(l=>status(l.n)==="done").length;
+ let i=seq.findIndex(l=>status(l.n)!=="done"); if(i<0)i=seq.length;
+ const days=(P.days&&P.days.length)?P.days:[1,2,3,4], now=new Date();
+ let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ const nx=dt(CAB.next_lesson); if(nx) d=new Date(nx.getFullYear(),nx.getMonth(),nx.getDate());
+ const start=P.start?dt(P.start):null; if(start&&d<start)d=new Date(start.getFullYear(),start.getMonth(),start.getDate());
+ const out=[]; let k=i, guard=0;
+ while(out.length<4&&guard++<400){ if(days.includes(d.getDay())){ out.push([new Date(d),seq[k]]); k++; } d.setDate(d.getDate()+1); }
  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
  const fd=x=>x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"});
- const wk=out.map(([dt,l])=>`<div class="dy${dt.getTime()===today?" td":""}"><small>${dt.getTime()===today?"Today":fd(dt)}</small>${l?`<b>${esc(l.n.startsWith("W")?"Workshop":l.n)}</b><span>${esc(l.t)}</span>`:"<b>Review</b><span>Level test & review</span>"}</div>`).join("");
- const goal=P.goal?new Date(P.goal+"T23:59"):null,left=goal?Math.max(0,Math.ceil((goal-now)/864e5)):null;
- const rt=(P.route||[]).map(r=>{const a=new Date(r[1]+"T00:00"),b=new Date(r[2]+"T23:59"),on=now>=a&&now<=b;return `<div class="${on?"now":""}"><b>${esc(r[0])}${on?" · now":""}</b>${new Date(r[1]).toLocaleDateString("en-GB",{month:"short",year:"numeric"})} – ${new Date(r[2]).toLocaleDateString("en-GB",{month:"short",year:"numeric"})}</div>`}).join("");
+ const wk=out.map(([dd,l])=>`<div class="dy${dd.getTime()===today?" td":""}"><small>${dd.getTime()===today?"Today":fd(dd)}</small>${l?`<b>${esc(l.n.startsWith("W")?"Workshop":l.n)}</b><span>${esc(l.t)}</span>`:"<b>Review</b><span>Level test & review</span>"}</div>`).join("");
+ const goal=P.goal?dt(P.goal):null, left=goal?Math.max(0,Math.ceil((goal-now)/864e5)):null;
+ const rt=(P.route||[]).map(r=>{ const a=dt(r[1]),b=dt(r[2]),on=a&&b&&now>=a&&now<=b;
+  return `<div class="${on?"now":""}"><b>${esc(r[0])}${on?" · now":""}</b>${fdate(r[1],{month:"short",year:"numeric"})} – ${fdate(r[2],{month:"short",year:"numeric"})}</div>`; }).join("");
  const pct=total?Math.round(done/total*100):0;
- $("plan").innerHTML=`<h2 class="sec" id="myplan">📆 My plan</h2><div class="pl"><div class="row3"><div class="card"><h3>Next lessons · ${esc(P.rhythm||"Mon–Thu")}</h3><div class="wk">${wk}</div></div>
- <div class="card"><h3>🎯 My goal</h3><div class="big">${esc(P.goal_text||"")}</div><div class="sub">by ${goal?goal.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}${left!=null?' · <span class="pill p-new">'+left+" days left</span>":""}</div>
- <div class="bar"><i style="width:${Math.max(2,pct)}%"></i></div><div class="sub" style="margin-top:6px">${esc(P.level||"This level")}: ${done} of ${total} lessons done</div></div></div>
- ${rt?`<div class="rt">${rt}</div>`:""}</div>`}
-const _r=render;render=function(){_r();renderPlan()};
-render();
-if(D.student.code){Promise.all([rpc("get_my_cabinet",{p_code:D.student.code}).catch(()=>[]),rpc("get_my_progress",{p_code:D.student.code}).catch(()=>[])]).then(([c,p])=>{
- CAB=(c&&c[0])||{};(p||[]).forEach(r=>{const m=String(r.lesson).match(/(\d+\.\d+|W\d+)/);if(!m)return;const n=m[1];
-  if(/homework|· hw/i.test(r.lesson)){if(r.submitted)HWD[n]=1}
-  if(/lesson|classic|· updated/i.test(r.lesson)||!/homework|extra|games|speak|before/i.test(r.lesson)){PROG[n]=r.submitted?"done":(PROG[n]==="done"?"done":"progress")}else if(!PROG[n])PROG[n]="progress"});render()})}
-document.querySelectorAll("aside a.nv").forEach(a=>a.addEventListener("click",()=>{document.querySelectorAll("aside a.nv").forEach(x=>x.classList.remove("on"));a.classList.add("on")}));
+ $("plan").innerHTML=`<h2 class="sec" id="myplan">📆 My plan</h2><div class="pl"><div class="row3">
+  <div class="card"><h3>Next lessons · ${esc(P.rhythm||"Mon–Thu")}</h3><div class="wk">${wk}</div></div>
+  <div class="card"><h3>🎯 My goal</h3><div class="big">${esc(P.goal_text||"")}</div><div class="sub">${goal?"by "+goal.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}${left!=null?' · <span class="pill p-new">'+left+" days left</span>":""}</div>
+  <div class="bar"><i style="width:${Math.max(2,pct)}%"></i></div><div class="sub" style="margin-top:6px">${esc(P.level||"This level")}: ${done} of ${total} lessons done</div></div></div>${rt?`<div class="rt">${rt}</div>`:""}</div>`;
+ if(window.observeSections) observeSections();
+}
+
+// cards are re-drawn on every change; the teacher tables only when rows are added / removed (so typing keeps the focus)
+function renderProgress(){ renderCards(); renderGrade(); renderSpeechEdit(); }
+function renderCards(){
+ $("skills").innerHTML=D.progress.skillsShown.map(([k,nm])=>{
+  const st=skillState(k); let big,note,w,src;
+  if(st.status==="none"){ big="—"; note='<div class="src">no tasks yet</div>'; w=0; src="waiting for your first tasks"; }
+  else if(st.status==="learning"){ big='<span style="font-size:17px;color:var(--ink2)">learning now</span>';
+   note='<div class="src">scored after you revisit it</div>'; w=0; src="new material — not scored yet"; }
+  else{ big=st.value+"<small>%</small>"; w=st.value;
+   note=st.delta==null?(k==="vocabulary"||st.topics?'':'<div class="src">first result</div>'):`<div style="font-size:12px;font-weight:600;color:${st.delta>=0?"var(--ok)":"var(--bad)"}">${st.delta>=0?"▲":"▼"} ${Math.abs(st.delta)} points</div>`;
+   src=st.status==="stale"?"not practised for "+daysAgo(st.last)+" days":(k==="vocabulary"?st.n+" words you know well":k==="speaking"?"from "+st.n+" assessment"+(st.n===1?"":"s"):st.topics?"average of "+st.n+" topic"+(st.n===1?"":"s"):"from "+st.n+" review task"+(st.n===1?"":"s")); }
+  return `<div class="card sk"><div class="lab">${esc(nm)}${st.status==="stale"?' <span class="pill p-no">needs review</span>':""}</div><div class="v">${big}</div>${note}<div class="bar"><i style="width:${w}%${st.status==="stale"?";background:var(--mut)":""}"></i></div><div class="src">● ${src}</div></div>`;
+ }).join("");
+
+ const st=speakState(), R=D.progress.rubric, G=D.progress.green;
+ const h=D.progress.speech.slice().sort(byDate).filter(s=>s.wpm!=null&&s.wpm!=="");
+ let chart="";
+ if(h.length){ const last=h[h.length-1],first0=h[0],gain=last.wpm-first0.wpm;
+  const W=400,H=112,P=22,vals=h.map(x=>Number(x.wpm));
+  const lo=Math.min(...vals,G[0])-10, hi=Math.max(...vals,G[1])+10;
+  const X=i=>P+(h.length<2?(W-2*P)/2:i*(W-2*P)/(h.length-1)), Y=v=>H-P-((v-lo)/(hi-lo))*(H-2*P);
+  const g1=Y(G[1]),g2=Y(G[0]), inG=last.wpm>=G[0]&&last.wpm<=G[1];
+  chart=`<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap"><div style="font-size:30px;font-weight:700;letter-spacing:-1px">${last.wpm} <span style="font-size:13px;font-weight:600;color:var(--mut);letter-spacing:0">words / min</span></div>${h.length>1?`<span class="pill ${gain>=0?"p-ok":"p-bad"}">${gain>=0?"+":""}${gain} since ${esc(first0.lesson)}</span>`:""}<span class="pill ${inG?"p-ok":"p-wa"}">${inG?"natural pace":"worth adjusting"}</span></div>
+  <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;margin-top:6px" role="img" aria-label="Your speaking pace: ${h.map(x=>x.wpm).join(", ")} words per minute">
+   <rect x="${P}" y="${g1}" width="${W-2*P}" height="${Math.max(0,g2-g1)}" fill="rgba(29,122,71,.1)" rx="4"/>
+   <text x="${W-P-2}" y="${g1-4}" font-size="9.5" fill="#1d7a47" text-anchor="end">natural range ${G[0]}–${G[1]}</text>
+   <polyline points="${h.map((x,i)=>X(i)+","+Y(x.wpm)).join(" ")}" fill="none" stroke="var(--acc)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+   ${h.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(x.wpm)}" r="${i===h.length-1?4.5:3}" fill="${i===h.length-1?"var(--acc)":"#fff"}" stroke="var(--acc)" stroke-width="2"/>`).join("")}
+   ${h.map((x,i)=>`<text x="${X(i)}" y="${Y(x.wpm)-9}" font-size="9.5" fill="#4d566d" text-anchor="middle">${x.wpm}</text>`).join("")}
+   ${h.map((x,i)=>`<text x="${X(i)}" y="${H-4}" font-size="9.5" fill="#737b90" text-anchor="middle">${esc(x.lesson)}</text>`).join("")}</svg>`; }
+ let bands="";
+ if(st.cur){ bands=R.map(([key,nm,lbl])=>{ const v=Number(st.cur[key]), dd=st.prev?v-Number(st.prev[key]):0;
+   return `<div class="br"><div style="min-width:0"><div class="t1">${esc(nm)}${dd>0?' <span class="pill p-ok">up</span>':""}</div><div class="t2">${esc(lbl[v-1])}</div></div><div class="bd" role="img" aria-label="${v} of 5">${[1,2,3,4,5].map(i=>`<span${i<=v?' class="on"':""}></span>`).join("")}</div></div>`; }).join("");
+  if(st.cur.comment) bands+=`<div class="q">💬 ${esc(st.cur.comment)}</div>`;
+  bands+=`<div class="src" style="margin-top:8px">● assessed by your teacher · ${fdate(st.cur.date)}</div>`; }
+ $("speakCard").innerHTML=(st.status==="none"&&!h.length)
+  ? '<h3>🗣 Speaking</h3><p class="empty">Your teacher hasn\'t assessed your speaking yet.</p>'
+  : `<h3>🗣 Speaking${st.value!=null?" · overall "+st.value+"%":""}</h3>${chart}${bands}`;
+
+ const v=D.progress.vocabStats, newW=v?Math.max(0,v.total-v.known-v.learning):0;
+ $("vocabCard").innerHTML=(!v||!v.total)?'<h3>📚 My vocabulary</h3><p class="empty">Choose your words in the trainer and start learning.</p><div style="margin-top:13px"><a class="btn" href="vocab.html">Open the trainer</a></div>'
+  :`<h3>📚 My vocabulary</h3><div class="num" style="font-size:30px">${v.known}<span style="font-size:15px;color:var(--mut);font-weight:600"> of ${v.total} words</span></div>
+    <div class="bar"><i style="width:${Math.round(v.known/v.total*100)}%"></i></div>
+    <div class="mr"><span class="n">● ● ● know well</span><span class="vv">${v.known}</span></div>
+    <div class="mr"><span class="n">● ● still learning</span><span class="vv">${v.learning}</span></div>
+    <div class="mr"><span class="n">● not started</span><span class="vv">${newW}</span></div>
+    <div style="margin-top:13px"><a class="btn" href="vocab.html">Train my words</a></div>
+    <div class="src">● counted by the trainer, not by your teacher</div>`;
+
+ const tp=gramTopics();
+ $("gramCard").innerHTML='<h3>📐 Grammar by topic</h3>'+(tp.length?tp.map(t=>{
+   let right,w,col;
+   if(t.value==null){ right='<span style="color:var(--mut);font-weight:400">learning now</span>'; w=0; col="var(--mut)"; }
+   else{ right=t.value+"%"; w=t.value; col=t.status==="stale"?"var(--mut)":t.value>=75?"var(--ok)":t.value>=50?"var(--wa)":"var(--bad)"; }
+   return `<div class="mr"><span class="n">${esc(t.topic)}${t.status==="stale"?' <span class="pill p-no">needs review</span>':""}</span><span class="vv">${right}</span></div><div class="bar"><i style="width:${w}%;background:${col}"></i></div>`;
+  }).join("")+'<div class="src" style="margin-top:11px">● a new topic is scored only after you come back to it</div>'
+  :'<p class="empty">No grammar tasks yet.</p>');
+}
+
+const SK2=[["listening","Listening"],["speaking","Speaking"],["reading","Reading"],["vocabulary","Vocabulary"],["grammar","Grammar"],["writing","Writing"],["pronunciation","Pronunciation"]];
+function changed(){ dirty=true; $("bSave").disabled=false; $("tinfo").textContent="· grading "+D.student.name+" · unsaved changes"; renderCards(); }
+function renderGrade(){
+ const c=$("gradeCard"); if(!teacher){ c.style.display="none"; return; } c.style.display="block";
+ const rows=MANUAL.slice().sort((a,b)=>a.date<b.date?1:-1).map(t=>`<tr data-id="${esc(t.id)}">
+  <td style="width:128px"><input type="date" value="${esc(t.date)}" data-f="date" aria-label="Date"></td>
+  <td style="width:62px"><input value="${esc(t.lesson)}" data-f="lesson" placeholder="1.1" aria-label="Lesson"></td>
+  <td style="min-width:150px"><input value="${esc(t.name)}" data-f="name" placeholder="Task name" aria-label="Task"></td>
+  <td style="width:124px"><select data-f="skill" aria-label="Skill">${SK2.map(([k,n])=>`<option value="${k}"${k===t.skill?" selected":""}>${n}</option>`).join("")}</select></td>
+  <td style="width:140px"><input value="${esc(t.topic||"")}" data-f="topic" placeholder="Grammar topic" aria-label="Topic"></td>
+  <td style="width:112px"><select data-f="stage" aria-label="Stage"><option value="first"${t.stage==="first"?" selected":""}>First time</option><option value="review"${t.stage==="review"?" selected":""}>Review</option></select></td>
+  <td style="width:70px"><input type="number" min="0" max="100" inputmode="numeric" value="${t.pct??""}" data-f="pct" style="text-align:center;font-weight:600" aria-label="Percent"></td>
+  <td style="width:40px"><button class="del" type="button" data-del="${esc(t.id)}" aria-label="Remove task">×</button></td></tr>`).join("");
+ const nA=AUTO.length;
+ c.innerHTML=`<h3>✍️ Grading · only “Review” rows count towards the score</h3>
+  <div style="overflow-x:auto"><table class="g"><tr><th>Date</th><th>Lesson</th><th>Task</th><th>Skill</th><th>Topic</th><th>Stage</th><th>%</th><th></th></tr>${rows||'<tr><td colspan="8" class="empty">No tasks graded yet.</td></tr>'}</table></div>
+  <div class="err" id="gErr" role="alert">Percent must be a number from 0 to 100.</div>
+  <div class="note"><b>First time</b> — the student meets this material for the first time; the row is kept for your record only.<br><b>Review</b> — the student comes back to it later; these rows build the percentage.<br><b>Topic</b> matters for grammar: each topic is scored on its own.${nA?`<br><b>Automatic:</b> ${nA} checked exercise${nA===1?"":"s"} from the lesson pages also count (Before class and Lesson = first time, homework = review). They are not edited here.`:""}</div>
+  <div style="margin-top:13px"><button class="btn l" type="button" id="bAdd">+ Add task</button></div>`;
+ c.querySelectorAll("input,select").forEach(el=>el.addEventListener("input",()=>{
+  const t=MANUAL.find(x=>x.id===el.closest("tr").dataset.id); if(!t)return;
+  const f=el.dataset.f;
+  if(f==="pct"){ const raw=el.value.trim();
+   if(raw===""){ t.pct=null; } else { const n=dnum(raw); if(n==null||n<0||n>100){ el.classList.add("bad"); $("gErr").classList.add("on"); return; } t.pct=Math.round(n); }
+   el.classList.remove("bad"); $("gErr").classList.remove("on"); }
+  else if(f==="date"){ if(!/^\d{4}-\d{2}-\d{2}$/.test(el.value)){ el.classList.add("bad"); return; } el.classList.remove("bad"); t.date=el.value; }
+  else t[f]=el.value;
+  changed(); }));
+ c.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{ MANUAL=MANUAL.filter(t=>t.id!==b.dataset.del); changed(); renderGrade(); });
+ $("bAdd").onclick=()=>{ MANUAL.push({id:"t"+Date.now(),date:isoToday(),lesson:"",name:"",skill:"listening",topic:"",pct:null,stage:"first"}); changed(); renderGrade();
+  const f=c.querySelector('tr[data-id] input[data-f="name"]'); if(f)f.focus(); };
+}
+
+function renderSpeechEdit(){
+ const c=$("speechEdit"); if(!teacher){ c.style.display="none"; return; } c.style.display="block";
+ const R=D.progress.rubric;
+ const sel=(s,r)=>`<select data-f="${r[0]}" aria-label="${esc(r[1])}">${[1,2,3,4,5].map(i=>`<option value="${i}"${Number(s[r[0]])===i?" selected":""}>${i} · ${esc(r[2][i-1])}</option>`).join("")}</select>`;
+ const rows=D.progress.speech.slice().sort((a,b)=>a.date<b.date?1:-1).map(s=>`<tr data-id="${esc(s.id)}">
+  <td style="width:128px"><input type="date" value="${esc(s.date)}" data-f="date" aria-label="Date"></td>
+  <td style="width:62px"><input value="${esc(s.lesson)}" data-f="lesson" placeholder="1.1" aria-label="Lesson"></td>
+  <td style="width:76px"><input type="number" min="40" max="260" inputmode="numeric" value="${s.wpm??""}" data-f="wpm" style="text-align:center;font-weight:600" aria-label="Words per minute"></td>
+  <td style="min-width:150px">${sel(s,R[0])}</td><td style="min-width:150px">${sel(s,R[1])}</td>
+  <td style="min-width:150px">${sel(s,R[2])}</td><td style="min-width:150px">${sel(s,R[3])}</td>
+  <td style="width:40px"><button class="del" type="button" data-del="${esc(s.id)}" aria-label="Remove assessment">×</button></td></tr>
+  <tr data-id="${esc(s.id)}"><td colspan="8" style="border-top:0;padding-top:0"><input value="${esc(s.comment||"")}" data-f="comment" placeholder="Comment shown to the student" aria-label="Comment for the student"></td></tr>`).join("");
+ c.innerHTML=`<h3>🗣 Speaking assessment · one entry per speaking lesson</h3>
+  <div style="overflow-x:auto"><table class="g"><tr><th>Date</th><th>Lesson</th><th>WPM</th><th>Fluency</th><th>Accuracy</th><th>Range</th><th>Pronunciation</th><th></th></tr>${rows||'<tr><td colspan="8" class="empty">No assessments yet.</td></tr>'}</table></div>
+  <div class="err" id="sErr" role="alert">Words per minute must be a number from 40 to 260.</div>
+  <div class="note">The percentage is the average of the four bands. Words per minute is a measurement, not a grade — the student sees it as a growth line.</div>
+  <div style="margin-top:13px"><button class="btn l" type="button" id="bAddS">+ Add assessment</button></div>`;
+ c.querySelectorAll("input,select").forEach(el=>el.addEventListener("input",()=>{
+  const s=D.progress.speech.find(x=>x.id===el.closest("tr").dataset.id); if(!s)return;
+  const f=el.dataset.f;
+  if(f==="wpm"){ const raw=el.value.trim();
+   if(raw===""){ s.wpm=null; } else { const n=dnum(raw); if(n==null||n<40||n>260){ el.classList.add("bad"); $("sErr").classList.add("on"); return; } s.wpm=Math.round(n); }
+   el.classList.remove("bad"); $("sErr").classList.remove("on"); }
+  else if(f==="date"){ if(!/^\d{4}-\d{2}-\d{2}$/.test(el.value)){ el.classList.add("bad"); return; } el.classList.remove("bad"); s.date=el.value; }
+  else if(["fluency","accuracy","range","pron"].includes(f)) s[f]=Number(el.value); else s[f]=el.value;
+  changed(); }));
+ c.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{ D.progress.speech=D.progress.speech.filter(s=>s.id!==b.dataset.del); changed(); renderSpeechEdit(); });
+ $("bAddS").onclick=()=>{ D.progress.speech.push({id:"s"+Date.now(),date:isoToday(),lesson:"",wpm:null,fluency:3,accuracy:3,range:3,pron:3,comment:""}); changed(); renderSpeechEdit(); };
+}
+
+// ---- Teacher mode: the key is checked by Supabase (admin_keys), kept only in memory; grades are written by admin_set_scores ----
+function setTeacher(on){ teacher=on; if(!on){ TKEY=""; dirty=false; } $("tb").classList.toggle("on",on);
+ $("bTeacher").style.display=on?"none":"block"; $("bSave").disabled=!dirty;
+ $("tinfo").textContent="· grading "+D.student.name;
+ renderProgress(); if(on) $("progress").scrollIntoView(); }
+function openKey(){ if(!D.student.code)return; $("ov").classList.add("on"); $("pwErr").classList.remove("on");
+ let k=""; try{k=localStorage.getItem("bp_admin_key")||""}catch(e){}   // same site as bp-admin: reuse the key if you are logged in there
+ $("pw").value=k; $("pw").focus(); }
+$("bTeacher").onclick=openKey; $("bTeacher2").onclick=openKey;
+$("bCancel").onclick=()=>$("ov").classList.remove("on");
+$("pw").addEventListener("input",()=>$("pwErr").classList.remove("on"));
+$("pw").addEventListener("keydown",e=>{ if(e.key==="Enter")$("bOk").click(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape")$("ov").classList.remove("on"); });
+$("bOk").onclick=async()=>{ const v=$("pw").value.trim(), err=$("pwErr");
+ if(!v){ err.textContent="Enter your teacher key first."; err.classList.add("on"); return; }
+ $("bOk").disabled=true;
+ try{ const ok=await rpc("admin_check",{p_key:v});
+  if(ok===true){ TKEY=v; $("ov").classList.remove("on");
+   try{ applyScores(await rpc("get_my_scores",{p_code:D.student.code})); saveCache(); }catch(e){}
+   setTeacher(true); }
+  else { err.textContent="Wrong key. Try again."; err.classList.add("on"); } }
+ catch(e){ err.textContent="Couldn't check the key: "+e.message+". Is the database set up (supabase_v3_scores.sql)?"; err.classList.add("on"); }
+ finally{ $("bOk").disabled=false; } };
+$("bExit").onclick=()=>{ if(dirty&&!confirm("You have unsaved grades. Exit without saving?"))return; setTeacher(false); applyScores(SC); renderProgress(); };
+$("bSave").onclick=async()=>{ $("bSave").disabled=true; $("tinfo").textContent="· saving…";
+ const strip=t=>{const o=Object.assign({},t);delete o.auto;return o;};
+ try{ await rpc("admin_set_scores",{p_key:TKEY,p_code:D.student.code,p_tasks:MANUAL.map(strip),p_speech:D.progress.speech});
+  dirty=false; SC=Object.assign({},SC||{},{tasks:MANUAL.map(strip),speech:D.progress.speech.map(s=>Object.assign({},s))}); saveCache();
+  $("tinfo").textContent="· saved ✓ "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}); }
+ catch(e){ $("bSave").disabled=false; $("tinfo").textContent="· not saved: "+e.message; } };
+addEventListener("beforeunload",e=>{ if(teacher&&dirty){ e.preventDefault(); e.returnValue=""; } });
+if(!D.student.code){ $("bTeacher").style.display="none"; $("bTeacher2").style.display="none"; }
+
+// ---- menu: aria-current follows clicks and scrolling ----
+const navs=[...document.querySelectorAll("aside a.nv")].filter(a=>a.getAttribute("href").startsWith("#"));
+const setCur=a=>{ navs.forEach(x=>x.removeAttribute("aria-current")); a.setAttribute("aria-current","true"); };
+navs.forEach(a=>a.addEventListener("click",()=>setCur(a)));
+let io=null;
+window.observeSections=()=>{ if(!("IntersectionObserver" in window))return; if(io)io.disconnect();
+ io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(!e.isIntersecting)return;
+  const a=navs.find(x=>x.getAttribute("href")==="#"+e.target.id); if(a)setCur(a); }); },{rootMargin:"-30% 0px -60% 0px"});
+ ["top","myplan","progress","course","homework"].forEach(id=>{ const el=$(id); if(el)io.observe(el); }); };
+
+loadCache(); render(); observeSections();
+setInterval(greet,60000);
+
+if(D.student.code){
+ Promise.all([ rpc("get_my_cabinet",{p_code:D.student.code}), rpc("get_my_progress",{p_code:D.student.code}) ])
+ .then(([c,p])=>{
+  CAB=(c&&c[0])||{}; PROG={}; HWD={}; SENT={};
+  (p||[]).forEach(r=>{ const m=String(r.lesson).match(/(\d+\.\d+|W\d+)/); if(!m)return; const n=m[1];
+   const pg=pageOf(r.lesson); if(r.submitted)SENT[n+"/"+pg]=1;
+   if(pg==="hw"&&r.submitted)HWD[n]=1;
+   if(pg==="lesson"){
+    PROG[n]=r.submitted?"done":(PROG[n]==="done"?"done":"progress"); }
+   else if(!PROG[n]) PROG[n]="progress"; });
+  saveCache(); $("offline").classList.remove("on"); render();
+ })
+ .catch(()=>{ const w=$("offline"); w.classList.add("on");
+  w.textContent="⚠️ Couldn't reach the server just now, so this page shows what was saved on this device. Your answers are safe — reload in a minute.";
+  if($("hwl").textContent.trim()==="Loading…") $("hwl").innerHTML='<p class="empty">Homework will appear when the connection is back.</p>'; });
+ // grades are separate: if the scores table is not set up yet, the rest of the page still works
+ rpc("get_my_scores",{p_code:D.student.code}).then(r=>{ if(teacher&&dirty)return; applyScores(r); saveCache(); renderProgress(); }).catch(()=>{});
+}
 </script></body></html>
