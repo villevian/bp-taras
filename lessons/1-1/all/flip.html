@@ -58,7 +58,7 @@ const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:S
 const $=id=>document.getElementById(id);let student="",timer=null,submitted=false,ready=false;
 const norm=s=>(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").replace(/[.!?]+$/,"").trim();
 const okv=(k,v)=>KEY[k].some(x=>norm(x)===norm(v));
-let CTX=null;const VIEW=new URLSearchParams(location.search).has("view");
+let CTX=null;const TEACH=new URLSearchParams(location.search).has("teacher"),VIEW=new URLSearchParams(location.search).has("view")||TEACH;
 function _tx(el){const c=el.cloneNode(true);c.querySelectorAll("b.x").forEach(b=>b.append(" "));c.querySelectorAll("b").forEach(b=>{if(/^[A-H]$/.test(b.textContent.trim()))b.append(" ")});return (c.textContent||"").replace(/\s+/g," ").trim()}
 function _prompt(el){
  const nl=el.closest(".notes");if(nl){const lb=el.previousElementSibling;if(lb&&lb.tagName==="LABEL")return _tx(lb)}
@@ -84,12 +84,16 @@ async function save(){if(!ready||VIEW)return;local();if(!STUDENT_CODE){status("T
  catch(e){status("Not saved online — check your internet. Your answers are kept on this device.","err")}}
 function later(){if(VIEW)return;clearTimeout(timer);timer=setTimeout(save,1200)}
 function teacherView(d){const a=d.answers||{};fill(a);document.body.classList.add("tv");
- const bar=document.createElement("div");bar.id="tvbar";bar.innerHTML="👩‍🏫 <b>Teacher view</b> · "+(d.name||"")+" · "+(d.submitted?"✓ Sent to teacher":"⏳ Not sent yet")+" · read-only, nothing is saved";document.body.prepend(bar);
+ const bar=document.createElement("div");bar.id="tvbar";bar.innerHTML="👩‍🏫 <b>Teacher view</b> · "+(d.name||"")+" · "+(d.submitted?"✓ Sent to teacher":"⏳ Not sent yet")+(TEACH?" · answers are read-only · your marks under each exercise save automatically (the student doesn't see them)":" · read-only, nothing is saved");document.body.prepend(bar);
  document.querySelectorAll("section.sec").forEach(sec=>{const nb=document.querySelector('nav button[data-s="'+sec.id+'"]');sec.dataset.tv="Step "+(nb?nb.textContent.trim():sec.id)});
  document.querySelectorAll(".ctl .btn[onclick]").forEach(b=>{try{(new Function(b.getAttribute("onclick")))()}catch(e){}});
  document.querySelectorAll("input.g,textarea.g").forEach(x=>x.readOnly=true);document.querySelectorAll("select.g,input[type=radio]").forEach(x=>x.disabled=true);
- if(window.afterFill)afterFill();const post=()=>parent.postMessage({tvHeight:document.documentElement.scrollHeight},"*");post();setTimeout(post,800);setTimeout(post,2500)}
-async function start(){let a=null;if(VIEW){status("Teacher view");addEventListener("message",e=>{if(e.data&&e.data.tv)teacherView(e.data.tv)});parent.postMessage({tvReady:1},"*");return}if(STUDENT_CODE){try{const r=await rpc("get_my_hw",{p_code:STUDENT_CODE,p_lesson:LESSON});const d=r&&r[0];
+ if(window.afterFill)afterFill();if(!TEACH){let k="";try{k=localStorage.getItem("bp_admin_key")||""}catch(e){}if(k&&STUDENT_CODE)rpc("admin_lesson_view",{p_key:k,p_code:STUDENT_CODE,p_lesson:LESSON}).then(r=>addMarks(k,(r&&r.marks)||[])).catch(()=>{})}const post=()=>parent.postMessage({tvHeight:document.documentElement.scrollHeight},"*");post();setTimeout(post,800);setTimeout(post,2500)}
+async function teacherOpen(){status("Teacher view");let k="";try{k=localStorage.getItem("bp_admin_key")||sessionStorage.getItem("tk")||""}catch(e){}
+ for(let i=0;i<3;i++){if(!k)k=(prompt("Teacher key")||"").trim();if(!k){status("Teacher view needs the teacher key","err");return}
+  try{const d=await rpc("admin_lesson_view",{p_key:k,p_code:STUDENT_CODE,p_lesson:LESSON});try{sessionStorage.setItem("tk",k)}catch(e){}teacherView(d||{});addMarks(k,(d&&d.marks)||[]);return}
+  catch(e){if(!/wrong teacher key/.test(e.message)){status("Teacher view: "+e.message,"err");return}k=""}}}
+async function start(){let a=null;if(TEACH){teacherOpen();return}if(VIEW){status("Teacher view");addEventListener("message",e=>{if(e.data&&e.data.tv)teacherView(e.data.tv)});parent.postMessage({tvReady:1},"*");return}if(STUDENT_CODE){try{const r=await rpc("get_my_hw",{p_code:STUDENT_CODE,p_lesson:LESSON});const d=r&&r[0];
  if(d){student=d.name;if(d.answers){a=d.answers;submitted=!!d.submitted;sentBy=a._sent||(submitted?"button":"");if(sentBy==="button")$("done").style.display="block";updSubmit();sentLabel()}if(d.teacher_comment){$("tcomt").textContent=d.teacher_comment;$("tcom").style.display="block"}}}catch(e){}}
  if(!a){try{a=JSON.parse(localStorage.getItem("hw:"+LESSON+":"+(STUDENT_CODE||"preview"))||localStorage.getItem("hw:"+LESSON+":preview")||"null")}catch(e){}}if(a)fill(a);ready=true;if(STUDENT_CODE&&a&&!a._ctx)save();
  if(!STUDENT_CODE)status("Template preview — answers are not sent anywhere.");else status(student?(a?"Welcome back, "+student+"! Your answers are loaded.":"Hi, "+student+"! Your answers save automatically."):"Your answers save automatically.","ok")}
@@ -185,5 +189,26 @@ function goStep(b){if(!b)return;b.click();setTimeout(()=>{const s=document.query
 })();
 (function(){document.querySelectorAll("section.sec").forEach(sec=>{let n="";sec.querySelectorAll("p.ins").forEach(p=>{const x=p.querySelector("b.x");if(x){n=x.textContent.trim();return}
  const f=p.firstElementChild;if(n&&f&&f.tagName==="B"&&/^[A-H]$/.test(f.textContent.trim())&&p.firstChild===f){const b=document.createElement("b");b.className="x";b.textContent=n;p.insertBefore(b,f)}})})})();
+function addMarks(key,marks){if(!STUDENT_CODE||document.querySelector(".mk"))return;const M={};marks.forEach(m=>M[m.ex]=m);
+ const st=document.createElement("style");st.textContent=".mk{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:14px 0 6px;padding:8px 12px;border:1.5px dashed #9b8cf0;border-radius:10px;background:#f6f4ff;font-size:14px}.mk b.l{color:#5b4bd6;min-width:34px}.mk button{border:1.5px solid #c9c0f7;background:#fff;border-radius:999px;padding:6px 14px;min-height:36px;cursor:pointer;font:inherit;font-size:14px}.mk button.on{background:#2e7d4f;border-color:#2e7d4f;color:#fff}.mk input{font:inherit;font-size:14px;border:1.5px solid #d6d0f5;border-radius:8px;padding:5px 8px;min-height:36px}.mk .sc{width:64px;text-align:center}.mk .mx{width:56px;text-align:center}.mk .nt{flex:1;min-width:140px}.mk .s{color:#6c7190;font-size:12.5px}.mk .s.err{color:#b8372b}body.tv .mk{display:flex!important}";document.head.appendChild(st);
+ document.querySelectorAll("section.sec").forEach(sec=>{const ps=[...sec.querySelectorAll("p.ins")].filter(p=>p.querySelector("b.x"));
+  ps.forEach((p,i)=>{const x=p.querySelector("b.x"),lt=x.nextElementSibling&&x.nextElementSibling.tagName==="B"&&/^[A-H]$/.test(x.nextElementSibling.textContent.trim())?x.nextElementSibling.textContent.trim():"";
+   const ex=x.textContent.trim()+lt;if(sec.querySelector('.mk[data-ex="'+ex+'"]'))return;
+   // the exercise = everything from this heading to the next one
+   const nxt=ps[i+1]||null,els=[];let e=p;while(e&&e!==nxt){if(e.nodeType===1)els.push(e);e=e.nextElementSibling;if(e&&e.matches&&e.matches(".nextbar"))break}
+   const keys=[...new Set(els.flatMap(el=>[...(el.matches("[data-k]")?[el]:[]),...el.querySelectorAll("[data-k]")]).map(el=>el.dataset.k).filter(k=>KEY[k]))];
+   const a=collect();let ok=0;keys.forEach(k=>{if(a[k]!=null&&okv(k,a[k]))ok++});
+   const m=M[ex]||{},max=m.max!=null?m.max:(keys.length||10);
+   const bar=document.createElement("div");bar.className="mk";bar.dataset.ex=ex;
+   bar.innerHTML=`<b class="l">${ex}</b><button type="button" class="dn${m.done?" on":""}">${m.done?"✓ Done":"Mark done"}</button><span>Score</span><input class="sc" type="number" min="0" step="0.5" value="${m.score??""}" placeholder="${keys.length?ok:"–"}" aria-label="Score"><span>/</span><input class="mx" type="number" min="1" step="0.5" value="${max}" aria-label="Out of"><input class="nt" value="${(m.note||"").replace(/"/g,"&quot;")}" placeholder="Note for you (student doesn't see it)" aria-label="Note"><span class="s">${keys.length?"auto check: "+ok+"/"+keys.length:""}${m.at?" · saved "+new Date(m.at).toLocaleDateString("en-GB",{day:"numeric",month:"short"}):""}</span>`;
+   (nxt||sec.querySelector(".nextbar")||null)?(nxt||sec.querySelector(".nextbar")).before(bar):sec.appendChild(bar);
+   let t=null;const send=()=>{clearTimeout(t);t=setTimeout(async()=>{const sc=bar.querySelector(".sc").value.trim(),mx=bar.querySelector(".mx").value.trim(),s=bar.querySelector(".s");
+     const n=sc===""?null:Number(sc),mm=mx===""?null:Number(mx);if(n!=null&&(isNaN(n)||n<0||(mm!=null&&n>mm))){s.className="s err";s.textContent="score must be 0–"+(mm??"max");return}
+     try{await rpc("admin_mark",{p_key:key,p_code:STUDENT_CODE,p_lesson:LESSON,p_ex:ex,p_done:bar.querySelector(".dn").classList.contains("on"),p_score:n,p_max:mm,p_note:bar.querySelector(".nt").value});s.className="s";s.textContent="saved ✓ "+new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}
+     catch(e){s.className="s err";s.textContent="not saved: "+e.message}},500)};
+   bar.querySelector(".dn").onclick=()=>{const b=bar.querySelector(".dn");b.classList.toggle("on");b.textContent=b.classList.contains("on")?"✓ Done":"Mark done";
+    const sc=bar.querySelector(".sc");if(b.classList.contains("on")&&sc.value===""&&keys.length)sc.value=ok;send()};
+   bar.querySelectorAll("input").forEach(i=>i.addEventListener("input",send))})});
+ const post=()=>parent.postMessage({tvHeight:document.documentElement.scrollHeight},"*");post();setTimeout(post,500)}
 start();
 </script><script src="https://villevian.github.io/bp-admin/vocab-kit.js" defer></script></body></html>
